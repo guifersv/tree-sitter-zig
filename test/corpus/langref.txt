@@ -1,0 +1,3680 @@
+============
+Identifiers
+============
+
+const @"identifier with spaces in it" = 0xff;
+const @"1SmallStep4Man" = 112358;
+
+const c = @import("std").c;
+pub extern "c" fn @"error"() void;
+pub extern "c" fn @"fstat$INODE64"(fd: c.fd_t, buf: *c.Stat) c_int;
+
+const Color = enum {
+    red,
+    @"really red",
+};
+const color: Color = .@"really red";
+
+---
+
+(source_file
+  (global_variable_declaration
+    name: (identifier)
+    value: (integer_literal))
+  (global_variable_declaration
+    name: (identifier)
+    value: (integer_literal))
+  (global_variable_declaration
+    name: (identifier)
+    value: (access_expression
+      (builtin_function
+        (builtin_identifier)
+        (string_literal
+          (string_literal_content)))
+      field: (identifier)))
+  (extern_function_declaration
+    layout: (string_literal
+      (string_literal_content))
+    name: (identifier)
+    parameters: (parameters)
+    return_type: (primitive_type))
+  (extern_function_declaration
+    layout: (string_literal
+      (string_literal_content))
+    name: (identifier)
+    parameters: (parameters
+      (parameter
+        name: (identifier)
+        type: (access_expression
+          (identifier)
+          field: (identifier)))
+      (parameter
+        name: (identifier)
+        type: (pointer_type
+          (access_expression
+            (identifier)
+            field: (identifier)))))
+    return_type: (primitive_type))
+  (global_variable_declaration
+    name: (identifier)
+    value: (enum_type
+      (container_field
+        type: (identifier))
+      (container_field
+        type: (identifier))))
+  (global_variable_declaration
+    name: (identifier)
+    type: (identifier)
+    value: (inferred_superset
+      (identifier))))
+
+=======
+Values
+=======
+
+// Custom error set definition:
+const ExampleErrorSet = error{
+    ExampleErrorVariant,
+};
+
+pub fn main() void {
+    // integers
+    const one_plus_one: i32 = 1 + 1;
+    print("1 + 1 = {}\n", .{one_plus_one});
+
+    // floats
+    const seven_div_three: f32 = 7.0 / 3.0;
+    print("7.0 / 3.0 = {}\n", .{seven_div_three});
+
+    // boolean
+    print("{}\n{}\n{}\n", .{
+        true and false,
+        true or false,
+        !true,
+    });
+
+    // optional
+    var optional_value: ?[]const u8 = null;
+    assert(optional_value == null);
+
+    print("\noptional 1\ntype: {}\nvalue: {?s}\n", .{
+        @TypeOf(optional_value), optional_value,
+    });
+
+    optional_value = "hi";
+    assert(optional_value != null);
+
+    print("\noptional 2\ntype: {}\nvalue: {?s}\n", .{
+        @TypeOf(optional_value), optional_value,
+    });
+
+    // error union
+    var number_or_error: ExampleErrorSet!i32 = ExampleErrorSet.ExampleErrorVariant;
+
+    print("\nerror union 1\ntype: {}\nvalue: {!}\n", .{
+        @TypeOf(number_or_error),
+        number_or_error,
+    });
+
+    number_or_error = 1234;
+
+    print("\nerror union 2\ntype: {}\nvalue: {!}\n", .{
+        @TypeOf(number_or_error), number_or_error,
+    });
+}
+
+---
+
+(source_file
+  (line_comment)
+  (global_variable_declaration
+    name: (identifier)
+    value: (error_set_declaration
+      (identifier)))
+  (function_declaration
+    name: (identifier)
+    parameters: (parameters)
+    return_type: (primitive_type)
+    (block
+      (line_comment)
+      (variable_assignment_statement
+        name: (identifier)
+        type: (primitive_type)
+        value: (binary_expression
+          left: (integer_literal)
+          right: (integer_literal)))
+      (expression_statement
+        (call_expression
+          (identifier)
+          (string_literal
+            (string_literal_content)
+            (escape_sequence))
+          (inferred_init_list
+            (init_list
+              (identifier)))))
+      (line_comment)
+      (variable_assignment_statement
+        name: (identifier)
+        type: (primitive_type)
+        value: (binary_expression
+          left: (float_literal)
+          right: (float_literal)))
+      (expression_statement
+        (call_expression
+          (identifier)
+          (string_literal
+            (string_literal_content)
+            (escape_sequence))
+          (inferred_init_list
+            (init_list
+              (identifier)))))
+      (line_comment)
+      (expression_statement
+        (call_expression
+          (identifier)
+          (string_literal
+            (string_literal_content)
+            (escape_sequence)
+            (string_literal_content)
+            (escape_sequence)
+            (string_literal_content)
+            (escape_sequence))
+          (inferred_init_list
+            (init_list
+              (binary_expression
+                left: (identifier)
+                right: (identifier))
+              (binary_expression
+                left: (identifier)
+                right: (identifier))
+              (unary_expression
+                (identifier))))))
+      (line_comment)
+      (variable_assignment_statement
+        name: (identifier)
+        type: (optional_type
+          (slice_type
+            (ptr_mods)
+            (primitive_type)))
+        value: (identifier))
+      (expression_statement
+        (call_expression
+          (identifier)
+          (binary_expression
+            left: (identifier)
+            right: (identifier))))
+      (expression_statement
+        (call_expression
+          (identifier)
+          (string_literal
+            (escape_sequence)
+            (string_literal_content)
+            (escape_sequence)
+            (string_literal_content)
+            (escape_sequence)
+            (string_literal_content)
+            (escape_sequence))
+          (inferred_init_list
+            (init_list
+              (builtin_function
+                (builtin_identifier)
+                (identifier))
+              (identifier)))))
+      (variable_assignment_statement
+        (identifier)
+        value: (string_literal
+          (string_literal_content)))
+      (expression_statement
+        (call_expression
+          (identifier)
+          (binary_expression
+            left: (identifier)
+            right: (identifier))))
+      (expression_statement
+        (call_expression
+          (identifier)
+          (string_literal
+            (escape_sequence)
+            (string_literal_content)
+            (escape_sequence)
+            (string_literal_content)
+            (escape_sequence)
+            (string_literal_content)
+            (escape_sequence))
+          (inferred_init_list
+            (init_list
+              (builtin_function
+                (builtin_identifier)
+                (identifier))
+              (identifier)))))
+      (line_comment)
+      (variable_assignment_statement
+        name: (identifier)
+        type: (error_union
+          (identifier)
+          (primitive_type))
+        value: (access_expression
+          (identifier)
+          field: (identifier)))
+      (expression_statement
+        (call_expression
+          (identifier)
+          (string_literal
+            (escape_sequence)
+            (string_literal_content)
+            (escape_sequence)
+            (string_literal_content)
+            (escape_sequence)
+            (string_literal_content)
+            (escape_sequence))
+          (inferred_init_list
+            (init_list
+              (builtin_function
+                (builtin_identifier)
+                (identifier))
+              (identifier)))))
+      (variable_assignment_statement
+        (identifier)
+        value: (integer_literal))
+      (expression_statement
+        (call_expression
+          (identifier)
+          (string_literal
+            (escape_sequence)
+            (string_literal_content)
+            (escape_sequence)
+            (string_literal_content)
+            (escape_sequence)
+            (string_literal_content)
+            (escape_sequence))
+          (inferred_init_list
+            (init_list
+              (builtin_function
+                (builtin_identifier)
+                (identifier))
+              (identifier))))))))
+
+=======
+Arrays
+=======
+
+// array literal
+const message = [_]u8{ 'h', 'e', 'l', 'l', 'o' };
+
+// alternative initialization using result location
+const alt_message: [5]u8 = .{ 'h', 'e', 'l', 'l', 'o' };
+
+comptime {
+    assert(mem.eql(u8, &message, &alt_message));
+}
+
+comptime {
+    assert(mem.eql(u8, &message, same_message));
+}
+
+test "iterate over an array" {
+    var sum: usize = 0;
+    for (message) |byte| {
+        sum += byte;
+    }
+    try expectEqual('h' + 'e' + 'l' * 2 + 'o', sum);
+}
+
+// modifiable array
+var some_integers: [100]i32 = undefined;
+
+test "modify an array" {
+    for (&some_integers, 0..) |*item, i| {
+        item.* = @intCast(i);
+    }
+    try expectEqual(10, some_integers[10]);
+    try expectEqual(99, some_integers[99]);
+}
+
+const part_one = [_]i32{ 1, 2, 3, 4 };
+const part_two = [_]i32{ 5, 6, 7, 8 };
+const all_of_it = part_one ++ part_two;
+comptime {
+    assert(mem.eql(i32, &all_of_it, &[_]i32{ 1, 2, 3, 4, 5, 6, 7, 8 }));
+}
+
+const hello_world = hello ++ " " ++ world;
+comptime {
+    assert(mem.eql(u8, hello_world, "hello world"));
+}
+
+const all_zero: [10]u16 = @splat(0);
+
+comptime {
+    assert(all_zero.len == 10);
+    assert(all_zero[5] == 0);
+}
+
+// use compile-time code to initialize an array
+var fancy_array = init: {
+    var initial_value: [10]Point = undefined;
+    for (&initial_value, 0..) |*pt, i| {
+        pt.* = Point{
+            .x = @intCast(i),
+            .y = @intCast(i * 2),
+        };
+    }
+    break :init initial_value;
+};
+const Point = struct {
+    x: i32,
+    y: i32,
+};
+
+var more_points: [10]Point = @splat(makePoint(3));
+fn makePoint(x: i32) Point {
+    return Point{
+        .x = x,
+        .y = x * 2,
+    };
+}
+test "array initialization with function calls" {
+    try expectEqual(3, more_points[4].x);
+    try expectEqual(10, more_points.len);
+}
+
+const mat4x5 = [4][5]f32{
+    [_]f32{ 1.0, 0.0, 0.0, 0.0, 0.0 },
+    [_]f32{ 0.0, 1.0, 0.0, 1.0, 0.0 },
+    [_]f32{ 0.0, 0.0, 1.0, 0.0, 0.0 },
+    [_]f32{ 0.0, 0.0, 0.0, 1.0, 9.9 },
+};
+test "multidimensional arrays" {
+    // mat4x5 itself is a one-dimensional array of arrays.
+    try expectEqual(mat4x5[1], [_]f32{ 0.0, 1.0, 0.0, 1.0, 0.0 });
+
+    // Access the 2D array by indexing the outer array, and then the inner array.
+    try expectEqual(9.9, mat4x5[3][4]);
+
+    // Here we iterate with for loops.
+    for (mat4x5, 0..) |row, row_index| {
+        for (row, 0..) |cell, column_index| {
+            if (row_index == column_index) {
+                try expectEqual(1.0, cell);
+            }
+        }
+    }
+
+    // Initialize a multidimensional array to zeros.
+    const all_zero: [4][5]f32 = .{.{0} ** 5} ** 4;
+    try expectEqual(0, all_zero[0][0]);
+}
+
+test "0-terminated sentinel array" {
+    const array = [_:0]u8{ 1, 2, 3, 4 };
+
+    try expectEqual([4:0]u8, @TypeOf(array));
+    try expectEqual(4, array.len);
+    try expectEqual(0, array[4]);
+}
+
+test "extra 0s in 0-terminated sentinel array" {
+    // The sentinel value may appear earlier, but does not influence the compile-time 'len'.
+    const array = [_:0]u8{ 1, 0, 0, 4 };
+
+    try expectEqual([4:0]u8, @TypeOf(array));
+    try expectEqual(4, array.len);
+    try expectEqual(0, array[4]);
+}
+
+fn swizzleRgbaToBgra(rgba: [4]u8) [4]u8 {
+    // readable swizzling by destructuring
+    const r, const g, const b, const a = rgba;
+    return .{ b, g, r, a };
+}
+
+pub fn main() void {
+    const pos = [_]i32{ 1, 2 };
+    const x, const y = pos;
+    print("x = {}, y = {}\n", .{x, y});
+
+    const orange: [4]u8 = .{ 255, 165, 0, 255 };
+    print("{any}\n", .{swizzleRgbaToBgra(orange)});
+}
+
+---
+
+(source_file
+  (line_comment)
+  (global_variable_declaration
+    name: (identifier)
+    value: (init_list_expression
+      (array_type
+        (identifier)
+        (primitive_type))
+      (init_list
+        (char_literal)
+        (char_literal)
+        (char_literal)
+        (char_literal)
+        (char_literal))))
+  (line_comment)
+  (global_variable_declaration
+    name: (identifier)
+    type: (array_type
+      (integer_literal)
+      (primitive_type))
+    value: (inferred_init_list
+      (init_list
+        (char_literal)
+        (char_literal)
+        (char_literal)
+        (char_literal)
+        (char_literal))))
+  (comptime_declaration
+    body: (block
+      (expression_statement
+        (call_expression
+          (identifier)
+          (call_expression
+            (access_expression
+              (identifier)
+              field: (identifier))
+            (primitive_type)
+            (unary_expression
+              (identifier))
+            (unary_expression
+              (identifier)))))))
+  (comptime_declaration
+    body: (block
+      (expression_statement
+        (call_expression
+          (identifier)
+          (call_expression
+            (access_expression
+              (identifier)
+              field: (identifier))
+            (primitive_type)
+            (unary_expression
+              (identifier))
+            (identifier))))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (variable_assignment_statement
+        name: (identifier)
+        type: (primitive_type)
+        value: (integer_literal))
+      (for_statement
+        pattern: (for_item
+          (identifier))
+        (ptr_list_payload
+          (identifier))
+        value: (block_expression
+          (block
+            (variable_assignment_statement
+              left: (identifier)
+              right: (identifier)))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (binary_expression
+              left: (binary_expression
+                left: (binary_expression
+                  left: (char_literal)
+                  right: (char_literal))
+                right: (binary_expression
+                  left: (char_literal)
+                  right: (integer_literal)))
+              right: (char_literal))
+            (identifier))))))
+  (line_comment)
+  (global_variable_declaration
+    name: (identifier)
+    type: (array_type
+      (integer_literal)
+      (primitive_type))
+    value: (identifier))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (for_statement
+        pattern: (for_item
+          (unary_expression
+            (identifier)))
+        pattern: (for_item
+          (integer_literal))
+        (ptr_list_payload
+          (identifier)
+          (identifier))
+        value: (block_expression
+          (block
+            (variable_assignment_statement
+              (unwrap_expression
+                (identifier))
+              value: (builtin_function
+                (builtin_identifier)
+                (identifier))))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (index_expression
+              (identifier)
+              (index_range
+                (integer_literal))))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (index_expression
+              (identifier)
+              (index_range
+                (integer_literal))))))))
+  (global_variable_declaration
+    name: (identifier)
+    value: (init_list_expression
+      (array_type
+        (identifier)
+        (primitive_type))
+      (init_list
+        (integer_literal)
+        (integer_literal)
+        (integer_literal)
+        (integer_literal))))
+  (global_variable_declaration
+    name: (identifier)
+    value: (init_list_expression
+      (array_type
+        (identifier)
+        (primitive_type))
+      (init_list
+        (integer_literal)
+        (integer_literal)
+        (integer_literal)
+        (integer_literal))))
+  (global_variable_declaration
+    name: (identifier)
+    value: (binary_expression
+      left: (identifier)
+      right: (identifier)))
+  (comptime_declaration
+    body: (block
+      (expression_statement
+        (call_expression
+          (identifier)
+          (call_expression
+            (access_expression
+              (identifier)
+              field: (identifier))
+            (primitive_type)
+            (unary_expression
+              (identifier))
+            (unary_expression
+              (init_list_expression
+                (array_type
+                  (identifier)
+                  (primitive_type))
+                (init_list
+                  (integer_literal)
+                  (integer_literal)
+                  (integer_literal)
+                  (integer_literal)
+                  (integer_literal)
+                  (integer_literal)
+                  (integer_literal)
+                  (integer_literal)))))))))
+  (global_variable_declaration
+    name: (identifier)
+    value: (binary_expression
+      left: (binary_expression
+        left: (identifier)
+        right: (string_literal
+          (string_literal_content)))
+      right: (identifier)))
+  (comptime_declaration
+    body: (block
+      (expression_statement
+        (call_expression
+          (identifier)
+          (call_expression
+            (access_expression
+              (identifier)
+              field: (identifier))
+            (primitive_type)
+            (identifier)
+            (string_literal
+              (string_literal_content)))))))
+  (global_variable_declaration
+    name: (identifier)
+    type: (array_type
+      (integer_literal)
+      (primitive_type))
+    value: (builtin_function
+      (builtin_identifier)
+      (integer_literal)))
+  (comptime_declaration
+    body: (block
+      (expression_statement
+        (call_expression
+          (identifier)
+          (binary_expression
+            left: (access_expression
+              (identifier)
+              field: (identifier))
+            right: (integer_literal))))
+      (expression_statement
+        (call_expression
+          (identifier)
+          (binary_expression
+            left: (index_expression
+              (identifier)
+              (index_range
+                (integer_literal)))
+            right: (integer_literal))))))
+  (line_comment)
+  (global_variable_declaration
+    name: (identifier)
+    value: (block_type_expression
+      (block_label
+        (identifier))
+      (block
+        (variable_assignment_statement
+          name: (identifier)
+          type: (array_type
+            (integer_literal)
+            (identifier))
+          value: (identifier))
+        (for_statement
+          pattern: (for_item
+            (unary_expression
+              (identifier)))
+          pattern: (for_item
+            (integer_literal))
+          (ptr_list_payload
+            (identifier)
+            (identifier))
+          value: (block_expression
+            (block
+              (variable_assignment_statement
+                (unwrap_expression
+                  (identifier))
+                value: (init_list_expression
+                  (identifier)
+                  (init_list
+                    (list_item
+                      field: (identifier)
+                      (builtin_function
+                        (builtin_identifier)
+                        (identifier)))
+                    (list_item
+                      field: (identifier)
+                      (builtin_function
+                        (builtin_identifier)
+                        (binary_expression
+                          left: (identifier)
+                          right: (integer_literal))))))))))
+        (expression_statement
+          (break_expression
+            (break_label
+              (identifier))
+            (identifier))))))
+  (global_variable_declaration
+    name: (identifier)
+    value: (struct_type
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))))
+  (global_variable_declaration
+    name: (identifier)
+    type: (array_type
+      (integer_literal)
+      (identifier))
+    value: (builtin_function
+      (builtin_identifier)
+      (call_expression
+        (identifier)
+        (integer_literal))))
+  (function_declaration
+    name: (identifier)
+    parameters: (parameters
+      (parameter
+        name: (identifier)
+        type: (primitive_type)))
+    return_type: (identifier)
+    (block
+      (expression_statement
+        (return_expression
+          (init_list_expression
+            (identifier)
+            (init_list
+              (list_item
+                field: (identifier)
+                (identifier))
+              (list_item
+                field: (identifier)
+                (binary_expression
+                  left: (identifier)
+                  right: (integer_literal)))))))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (access_expression
+              (index_expression
+                (identifier)
+                (index_range
+                  (integer_literal)))
+              field: (identifier)))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (access_expression
+              (identifier)
+              field: (identifier)))))))
+  (global_variable_declaration
+    name: (identifier)
+    value: (init_list_expression
+      (array_type
+        (integer_literal)
+        (array_type
+          (integer_literal)
+          (primitive_type)))
+      (init_list
+        (init_list_expression
+          (array_type
+            (identifier)
+            (primitive_type))
+          (init_list
+            (float_literal)
+            (float_literal)
+            (float_literal)
+            (float_literal)
+            (float_literal)))
+        (init_list_expression
+          (array_type
+            (identifier)
+            (primitive_type))
+          (init_list
+            (float_literal)
+            (float_literal)
+            (float_literal)
+            (float_literal)
+            (float_literal)))
+        (init_list_expression
+          (array_type
+            (identifier)
+            (primitive_type))
+          (init_list
+            (float_literal)
+            (float_literal)
+            (float_literal)
+            (float_literal)
+            (float_literal)))
+        (init_list_expression
+          (array_type
+            (identifier)
+            (primitive_type))
+          (init_list
+            (float_literal)
+            (float_literal)
+            (float_literal)
+            (float_literal)
+            (float_literal))))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (line_comment)
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (index_expression
+              (identifier)
+              (index_range
+                (integer_literal)))
+            (init_list_expression
+              (array_type
+                (identifier)
+                (primitive_type))
+              (init_list
+                (float_literal)
+                (float_literal)
+                (float_literal)
+                (float_literal)
+                (float_literal))))))
+      (line_comment)
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (float_literal)
+            (index_expression
+              (index_expression
+                (identifier)
+                (index_range
+                  (integer_literal)))
+              (index_range
+                (integer_literal))))))
+      (line_comment)
+      (for_statement
+        pattern: (for_item
+          (identifier))
+        pattern: (for_item
+          (integer_literal))
+        (ptr_list_payload
+          (identifier)
+          (identifier))
+        value: (block_expression
+          (block
+            (for_statement
+              pattern: (for_item
+                (identifier))
+              pattern: (for_item
+                (integer_literal))
+              (ptr_list_payload
+                (identifier)
+                (identifier))
+              value: (block_expression
+                (block
+                  (if_statement
+                    condition: (binary_expression
+                      left: (identifier)
+                      right: (identifier))
+                    consequence: (block_expression
+                      (block
+                        (expression_statement
+                          (try_expression
+                            (call_expression
+                              (identifier)
+                              (float_literal)
+                              (identifier)))))))))))))
+      (line_comment)
+      (variable_assignment_statement
+        name: (identifier)
+        type: (array_type
+          (integer_literal)
+          (array_type
+            (integer_literal)
+            (primitive_type)))
+        value: (binary_expression
+          left: (inferred_init_list
+            (init_list
+              (binary_expression
+                left: (inferred_init_list
+                  (init_list
+                    (integer_literal)))
+                right: (integer_literal))))
+          right: (integer_literal)))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (index_expression
+              (index_expression
+                (identifier)
+                (index_range
+                  (integer_literal)))
+              (index_range
+                (integer_literal))))))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (variable_assignment_statement
+        name: (identifier)
+        value: (init_list_expression
+          (array_type
+            (identifier)
+            (integer_literal)
+            (primitive_type))
+          (init_list
+            (integer_literal)
+            (integer_literal)
+            (integer_literal)
+            (integer_literal))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (array_type
+              (integer_literal)
+              (integer_literal)
+              (primitive_type))
+            (builtin_function
+              (builtin_identifier)
+              (identifier)))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (access_expression
+              (identifier)
+              field: (identifier)))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (index_expression
+              (identifier)
+              (index_range
+                (integer_literal))))))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (line_comment)
+      (variable_assignment_statement
+        name: (identifier)
+        value: (init_list_expression
+          (array_type
+            (identifier)
+            (integer_literal)
+            (primitive_type))
+          (init_list
+            (integer_literal)
+            (integer_literal)
+            (integer_literal)
+            (integer_literal))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (array_type
+              (integer_literal)
+              (integer_literal)
+              (primitive_type))
+            (builtin_function
+              (builtin_identifier)
+              (identifier)))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (access_expression
+              (identifier)
+              field: (identifier)))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (index_expression
+              (identifier)
+              (index_range
+                (integer_literal))))))))
+  (function_declaration
+    name: (identifier)
+    parameters: (parameters
+      (parameter
+        name: (identifier)
+        type: (array_type
+          (integer_literal)
+          (primitive_type))))
+    return_type: (array_type
+      (integer_literal)
+      (primitive_type))
+    (block
+      (line_comment)
+      (variable_assignment_statement
+        name: (identifier)
+        name: (identifier)
+        name: (identifier)
+        name: (identifier)
+        value: (identifier))
+      (expression_statement
+        (return_expression
+          (inferred_init_list
+            (init_list
+              (identifier)
+              (identifier)
+              (identifier)
+              (identifier)))))))
+  (function_declaration
+    name: (identifier)
+    parameters: (parameters)
+    return_type: (primitive_type)
+    (block
+      (variable_assignment_statement
+        name: (identifier)
+        value: (init_list_expression
+          (array_type
+            (identifier)
+            (primitive_type))
+          (init_list
+            (integer_literal)
+            (integer_literal))))
+      (variable_assignment_statement
+        name: (identifier)
+        name: (identifier)
+        value: (identifier))
+      (expression_statement
+        (call_expression
+          (identifier)
+          (string_literal
+            (string_literal_content)
+            (escape_sequence))
+          (inferred_init_list
+            (init_list
+              (identifier)
+              (identifier)))))
+      (variable_assignment_statement
+        name: (identifier)
+        type: (array_type
+          (integer_literal)
+          (primitive_type))
+        value: (inferred_init_list
+          (init_list
+            (integer_literal)
+            (integer_literal)
+            (integer_literal)
+            (integer_literal))))
+      (expression_statement
+        (call_expression
+          (identifier)
+          (string_literal
+            (string_literal_content)
+            (escape_sequence))
+          (inferred_init_list
+            (init_list
+              (call_expression
+                (identifier)
+                (identifier)))))))))
+
+=======
+Struct
+=======
+
+const Point = struct {
+    x: f32,
+    y: f32,
+};
+
+// Declare an instance of a struct.
+const p: Point = .{
+    .x = 0.12,
+    .y = 0.34,
+};
+
+// Functions in the struct's namespace can be called with dot syntax.
+const Vec3 = struct {
+    x: f32,
+    y: f32,
+    z: f32,
+
+    pub fn init(x: f32, y: f32, z: f32) Vec3 {
+        return Vec3{
+            .x = x,
+            .y = y,
+            .z = z,
+        };
+    }
+
+    pub fn dot(self: Vec3, other: Vec3) f32 {
+        return self.x * other.x + self.y * other.y + self.z * other.z;
+    }
+};
+
+test "dot product" {
+    const v1 = Vec3.init(1.0, 0.0, 0.0);
+    const v2 = Vec3.init(0.0, 1.0, 0.0);
+    try expectEqual(0.0, v1.dot(v2));
+
+    // Other than being available to call with dot syntax, struct methods are
+    // not special. You can reference them as any other declaration inside
+    // the struct:
+    try expectEqual(0.0, Vec3.dot(v1, v2));
+}
+
+// Structs can have declarations.
+// Structs can have 0 fields.
+const Empty = struct {
+    pub const PI = 3.14;
+};
+test "struct namespaced variable" {
+    try expectEqual(3.14, Empty.PI);
+    try expectEqual(0, @sizeOf(Empty));
+
+    // Empty structs can be instantiated the same as usual.
+    const does_nothing: Empty = .{};
+
+    _ = does_nothing;
+}
+
+// Struct field order is determined by the compiler, however, a base pointer
+// can be computed from a field pointer:
+fn setYBasedOnX(x: *f32, y: f32) void {
+    const point: *Point = @fieldParentPtr("x", x);
+    point.y = y;
+}
+test "field parent pointer" {
+    var point = Point{
+        .x = 0.1234,
+        .y = 0.5678,
+    };
+    setYBasedOnX(&point.x, 0.9);
+    try expectEqual(0.9, point.y);
+}
+
+// Structs can be returned from functions.
+fn LinkedList(comptime T: type) type {
+    return struct {
+        pub const Node = struct {
+            prev: ?*Node,
+            next: ?*Node,
+            data: T,
+        };
+
+        first: ?*Node,
+        last: ?*Node,
+        len: usize,
+    };
+}
+
+test "linked list" {
+    // Functions called at compile-time are memoized.
+    try expectEqual(LinkedList(i32), LinkedList(i32));
+
+    const list = LinkedList(i32){
+        .first = null,
+        .last = null,
+        .len = 0,
+    };
+    try expectEqual(0, list.len);
+
+    // Since types are first class values you can instantiate the type
+    // by assigning it to a variable:
+    const ListOfInts = LinkedList(i32);
+    try expectEqual(LinkedList(i32), ListOfInts);
+
+    var node = ListOfInts.Node{
+        .prev = null,
+        .next = null,
+        .data = 1234,
+    };
+    const list2 = LinkedList(i32){
+        .first = &node,
+        .last = &node,
+        .len = 1,
+    };
+
+    // When using a pointer to a struct, fields can be accessed directly,
+    // without explicitly dereferencing the pointer.
+    // So you can do
+    try expectEqual(1234, list2.first.?.data);
+    // instead of try expectEqual(1234, list2.first.?.*.data);
+}
+
+---
+
+(source_file
+  (global_variable_declaration
+    name: (identifier)
+    value: (struct_type
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))))
+  (line_comment)
+  (global_variable_declaration
+    name: (identifier)
+    type: (identifier)
+    value: (inferred_init_list
+      (init_list
+        (list_item
+          field: (identifier)
+          (float_literal))
+        (list_item
+          field: (identifier)
+          (float_literal)))))
+  (line_comment)
+  (global_variable_declaration
+    name: (identifier)
+    value: (struct_type
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (function_declaration
+        name: (identifier)
+        parameters: (parameters
+          (parameter
+            name: (identifier)
+            type: (primitive_type))
+          (parameter
+            name: (identifier)
+            type: (primitive_type))
+          (parameter
+            name: (identifier)
+            type: (primitive_type)))
+        return_type: (identifier)
+        (block
+          (expression_statement
+            (return_expression
+              (init_list_expression
+                (identifier)
+                (init_list
+                  (list_item
+                    field: (identifier)
+                    (identifier))
+                  (list_item
+                    field: (identifier)
+                    (identifier))
+                  (list_item
+                    field: (identifier)
+                    (identifier))))))))
+      (function_declaration
+        name: (identifier)
+        parameters: (parameters
+          (parameter
+            name: (identifier)
+            type: (identifier))
+          (parameter
+            name: (identifier)
+            type: (identifier)))
+        return_type: (primitive_type)
+        (block
+          (expression_statement
+            (return_expression
+              (binary_expression
+                left: (binary_expression
+                  left: (binary_expression
+                    left: (access_expression
+                      (identifier)
+                      field: (identifier))
+                    right: (access_expression
+                      (identifier)
+                      field: (identifier)))
+                  right: (binary_expression
+                    left: (access_expression
+                      (identifier)
+                      field: (identifier))
+                    right: (access_expression
+                      (identifier)
+                      field: (identifier))))
+                right: (binary_expression
+                  left: (access_expression
+                    (identifier)
+                    field: (identifier))
+                  right: (access_expression
+                    (identifier)
+                    field: (identifier))))))))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (variable_assignment_statement
+        name: (identifier)
+        value: (call_expression
+          (access_expression
+            (identifier)
+            field: (identifier))
+          (float_literal)
+          (float_literal)
+          (float_literal)))
+      (variable_assignment_statement
+        name: (identifier)
+        value: (call_expression
+          (access_expression
+            (identifier)
+            field: (identifier))
+          (float_literal)
+          (float_literal)
+          (float_literal)))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (float_literal)
+            (call_expression
+              (access_expression
+                (identifier)
+                field: (identifier))
+              (identifier)))))
+      (line_comment)
+      (line_comment)
+      (line_comment)
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (float_literal)
+            (call_expression
+              (access_expression
+                (identifier)
+                field: (identifier))
+              (identifier)
+              (identifier)))))))
+  (line_comment)
+  (line_comment)
+  (global_variable_declaration
+    name: (identifier)
+    value: (struct_type
+      (global_variable_declaration
+        name: (identifier)
+        value: (float_literal))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (float_literal)
+            (access_expression
+              (identifier)
+              field: (identifier)))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (builtin_function
+              (builtin_identifier)
+              (identifier)))))
+      (line_comment)
+      (variable_assignment_statement
+        name: (identifier)
+        type: (identifier)
+        value: (inferred_init_list
+          (init_list)))
+      (variable_assignment_statement
+        (identifier)
+        value: (identifier))))
+  (line_comment)
+  (line_comment)
+  (function_declaration
+    name: (identifier)
+    parameters: (parameters
+      (parameter
+        name: (identifier)
+        type: (pointer_type
+          (primitive_type)))
+      (parameter
+        name: (identifier)
+        type: (primitive_type)))
+    return_type: (primitive_type)
+    (block
+      (variable_assignment_statement
+        name: (identifier)
+        type: (pointer_type
+          (identifier))
+        value: (builtin_function
+          (builtin_identifier)
+          (string_literal
+            (string_literal_content))
+          (identifier)))
+      (variable_assignment_statement
+        (access_expression
+          (identifier)
+          field: (identifier))
+        value: (identifier))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (variable_assignment_statement
+        name: (identifier)
+        value: (init_list_expression
+          (identifier)
+          (init_list
+            (list_item
+              field: (identifier)
+              (float_literal))
+            (list_item
+              field: (identifier)
+              (float_literal)))))
+      (expression_statement
+        (call_expression
+          (identifier)
+          (unary_expression
+            (access_expression
+              (identifier)
+              field: (identifier)))
+          (float_literal)))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (float_literal)
+            (access_expression
+              (identifier)
+              field: (identifier)))))))
+  (line_comment)
+  (function_declaration
+    name: (identifier)
+    parameters: (parameters
+      (parameter
+        name: (identifier)
+        type: (primitive_type)))
+    return_type: (primitive_type)
+    (block
+      (expression_statement
+        (return_expression
+          (struct_type
+            (global_variable_declaration
+              name: (identifier)
+              value: (struct_type
+                (container_field
+                  name: (identifier)
+                  type: (optional_type
+                    (pointer_type
+                      (identifier))))
+                (container_field
+                  name: (identifier)
+                  type: (optional_type
+                    (pointer_type
+                      (identifier))))
+                (container_field
+                  name: (identifier)
+                  type: (identifier))))
+            (container_field
+              name: (identifier)
+              type: (optional_type
+                (pointer_type
+                  (identifier))))
+            (container_field
+              name: (identifier)
+              type: (optional_type
+                (pointer_type
+                  (identifier))))
+            (container_field
+              name: (identifier)
+              type: (primitive_type)))))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (line_comment)
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (call_expression
+              (identifier)
+              (primitive_type))
+            (call_expression
+              (identifier)
+              (primitive_type)))))
+      (variable_assignment_statement
+        name: (identifier)
+        value: (init_list_expression
+          (call_expression
+            (identifier)
+            (primitive_type))
+          (init_list
+            (list_item
+              field: (identifier)
+              (identifier))
+            (list_item
+              field: (identifier)
+              (identifier))
+            (list_item
+              field: (identifier)
+              (integer_literal)))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (access_expression
+              (identifier)
+              field: (identifier)))))
+      (line_comment)
+      (line_comment)
+      (variable_assignment_statement
+        name: (identifier)
+        value: (call_expression
+          (identifier)
+          (primitive_type)))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (call_expression
+              (identifier)
+              (primitive_type))
+            (identifier))))
+      (variable_assignment_statement
+        name: (identifier)
+        value: (init_list_expression
+          (access_expression
+            (identifier)
+            field: (identifier))
+          (init_list
+            (list_item
+              field: (identifier)
+              (identifier))
+            (list_item
+              field: (identifier)
+              (identifier))
+            (list_item
+              field: (identifier)
+              (integer_literal)))))
+      (variable_assignment_statement
+        name: (identifier)
+        value: (init_list_expression
+          (call_expression
+            (identifier)
+            (primitive_type))
+          (init_list
+            (list_item
+              field: (identifier)
+              (unary_expression
+                (identifier)))
+            (list_item
+              field: (identifier)
+              (unary_expression
+                (identifier)))
+            (list_item
+              field: (identifier)
+              (integer_literal)))))
+      (line_comment)
+      (line_comment)
+      (line_comment)
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (access_expression
+              (unwrap_expression
+                (access_expression
+                  (identifier)
+                  field: (identifier)))
+              field: (identifier)))))
+      (line_comment))))
+
+=====
+Enum
+=====
+
+const Type = enum {
+    ok,
+    not_ok,
+};
+
+// Declare a specific enum field.
+const c = Type.ok;
+
+// If you want access to the ordinal value of an enum, you
+// can specify the tag type.
+const Value = enum(u2) {
+    zero,
+    one,
+    two,
+};
+// Now you can cast between u2 and Value.
+// The ordinal value starts from 0, counting up by 1 from the previous member.
+test "enum ordinal value" {
+    try expectEqual(0, @intFromEnum(Value.zero));
+    try expectEqual(1, @intFromEnum(Value.one));
+    try expectEqual(2, @intFromEnum(Value.two));
+}
+
+// You can override the ordinal value for an enum.
+const Value2 = enum(u32) {
+    hundred = 100,
+    thousand = 1000,
+    million = 1000000,
+};
+test "set enum ordinal value" {
+    try expectEqual(100, @intFromEnum(Value2.hundred));
+    try expectEqual(1000, @intFromEnum(Value2.thousand));
+    try expectEqual(1000000, @intFromEnum(Value2.million));
+}
+
+// You can also override only some values.
+const Value3 = enum(u4) {
+    a,
+    b = 8,
+    c,
+    d = 4,
+    e,
+};
+test "enum implicit ordinal values and overridden values" {
+    try expectEqual(0, @intFromEnum(Value3.a));
+    try expectEqual(8, @intFromEnum(Value3.b));
+    try expectEqual(9, @intFromEnum(Value3.c));
+    try expectEqual(4, @intFromEnum(Value3.d));
+    try expectEqual(5, @intFromEnum(Value3.e));
+}
+
+// Enums can have methods, the same as structs and unions.
+// Enum methods are not special, they are only namespaced
+// functions that you can call with dot syntax.
+const Suit = enum {
+    clubs,
+    spades,
+    diamonds,
+    hearts,
+
+    pub fn isClubs(self: Suit) bool {
+        return self == Suit.clubs;
+    }
+};
+test "enum method" {
+    const p = Suit.spades;
+    try expect(!p.isClubs());
+}
+
+// An enum can be switched upon.
+const Foo = enum {
+    string,
+    number,
+    none,
+};
+test "enum switch" {
+    const p = Foo.number;
+    const what_is_it = switch (p) {
+        Foo.string => "this is a string",
+        Foo.number => "this is a number",
+        Foo.none => "this is a none",
+    };
+    try expectEqualStrings(what_is_it, "this is a number");
+}
+
+// @typeInfo can be used to access the integer tag type of an enum.
+const Small = enum {
+    one,
+    two,
+    three,
+    four,
+};
+test "std.meta.Tag" {
+    try expectEqual(u2, @typeInfo(Small).@"enum".tag_type);
+}
+
+// @typeInfo tells us the field count and the fields names:
+test "@typeInfo" {
+    try expectEqual(4, @typeInfo(Small).@"enum".fields.len);
+    try expectEqualStrings(@typeInfo(Small).@"enum".fields[1].name, "two");
+}
+
+// @tagName gives a [:0]const u8 representation of an enum value:
+test "@tagName" {
+    try expectEqualStrings(@tagName(Small.three), "three");
+}
+
+---
+
+(source_file
+  (global_variable_declaration
+    name: (identifier)
+    value: (enum_type
+      (container_field
+        type: (identifier))
+      (container_field
+        type: (identifier))))
+  (line_comment)
+  (global_variable_declaration
+    name: (identifier)
+    value: (access_expression
+      (identifier)
+      field: (identifier)))
+  (line_comment)
+  (line_comment)
+  (global_variable_declaration
+    name: (identifier)
+    value: (enum_type
+      (primitive_type)
+      (container_field
+        type: (identifier))
+      (container_field
+        type: (identifier))
+      (container_field
+        type: (identifier))))
+  (line_comment)
+  (line_comment)
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (builtin_function
+              (builtin_identifier)
+              (access_expression
+                (identifier)
+                field: (identifier))))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (builtin_function
+              (builtin_identifier)
+              (access_expression
+                (identifier)
+                field: (identifier))))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (builtin_function
+              (builtin_identifier)
+              (access_expression
+                (identifier)
+                field: (identifier))))))))
+  (line_comment)
+  (global_variable_declaration
+    name: (identifier)
+    value: (enum_type
+      (primitive_type)
+      (container_field
+        type: (identifier)
+        value: (integer_literal))
+      (container_field
+        type: (identifier)
+        value: (integer_literal))
+      (container_field
+        type: (identifier)
+        value: (integer_literal))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (builtin_function
+              (builtin_identifier)
+              (access_expression
+                (identifier)
+                field: (identifier))))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (builtin_function
+              (builtin_identifier)
+              (access_expression
+                (identifier)
+                field: (identifier))))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (builtin_function
+              (builtin_identifier)
+              (access_expression
+                (identifier)
+                field: (identifier))))))))
+  (line_comment)
+  (global_variable_declaration
+    name: (identifier)
+    value: (enum_type
+      (primitive_type)
+      (container_field
+        type: (identifier))
+      (container_field
+        type: (identifier)
+        value: (integer_literal))
+      (container_field
+        type: (identifier))
+      (container_field
+        type: (identifier)
+        value: (integer_literal))
+      (container_field
+        type: (identifier))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (builtin_function
+              (builtin_identifier)
+              (access_expression
+                (identifier)
+                field: (identifier))))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (builtin_function
+              (builtin_identifier)
+              (access_expression
+                (identifier)
+                field: (identifier))))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (builtin_function
+              (builtin_identifier)
+              (access_expression
+                (identifier)
+                field: (identifier))))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (builtin_function
+              (builtin_identifier)
+              (access_expression
+                (identifier)
+                field: (identifier))))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (builtin_function
+              (builtin_identifier)
+              (access_expression
+                (identifier)
+                field: (identifier))))))))
+  (line_comment)
+  (line_comment)
+  (line_comment)
+  (global_variable_declaration
+    name: (identifier)
+    value: (enum_type
+      (container_field
+        type: (identifier))
+      (container_field
+        type: (identifier))
+      (container_field
+        type: (identifier))
+      (container_field
+        type: (identifier))
+      (function_declaration
+        name: (identifier)
+        parameters: (parameters
+          (parameter
+            name: (identifier)
+            type: (identifier)))
+        return_type: (primitive_type)
+        (block
+          (expression_statement
+            (return_expression
+              (binary_expression
+                left: (identifier)
+                right: (access_expression
+                  (identifier)
+                  field: (identifier)))))))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (variable_assignment_statement
+        name: (identifier)
+        value: (access_expression
+          (identifier)
+          field: (identifier)))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (unary_expression
+              (call_expression
+                (access_expression
+                  (identifier)
+                  field: (identifier)))))))))
+  (line_comment)
+  (global_variable_declaration
+    name: (identifier)
+    value: (enum_type
+      (container_field
+        type: (identifier))
+      (container_field
+        type: (identifier))
+      (container_field
+        type: (identifier))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (variable_assignment_statement
+        name: (identifier)
+        value: (access_expression
+          (identifier)
+          field: (identifier)))
+      (variable_assignment_statement
+        name: (identifier)
+        value: (switch_expression
+          value: (identifier)
+          (switch_case
+            pattern: (access_expression
+              (identifier)
+              field: (identifier))
+            value: (string_literal
+              (string_literal_content)))
+          (switch_case
+            pattern: (access_expression
+              (identifier)
+              field: (identifier))
+            value: (string_literal
+              (string_literal_content)))
+          (switch_case
+            pattern: (access_expression
+              (identifier)
+              field: (identifier))
+            value: (string_literal
+              (string_literal_content)))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (identifier)
+            (string_literal
+              (string_literal_content)))))))
+  (line_comment)
+  (global_variable_declaration
+    name: (identifier)
+    value: (enum_type
+      (container_field
+        type: (identifier))
+      (container_field
+        type: (identifier))
+      (container_field
+        type: (identifier))
+      (container_field
+        type: (identifier))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (primitive_type)
+            (access_expression
+              (access_expression
+                (builtin_function
+                  (builtin_identifier)
+                  (identifier))
+                field: (identifier))
+              field: (identifier)))))))
+  (line_comment)
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (access_expression
+              (access_expression
+                (access_expression
+                  (builtin_function
+                    (builtin_identifier)
+                    (identifier))
+                  field: (identifier))
+                field: (identifier))
+              field: (identifier)))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (access_expression
+              (index_expression
+                (access_expression
+                  (access_expression
+                    (builtin_function
+                      (builtin_identifier)
+                      (identifier))
+                    field: (identifier))
+                  field: (identifier))
+                (index_range
+                  (integer_literal)))
+              field: (identifier))
+            (string_literal
+              (string_literal_content)))))))
+  (line_comment)
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (builtin_function
+              (builtin_identifier)
+              (access_expression
+                (identifier)
+                field: (identifier)))
+            (string_literal
+              (string_literal_content))))))))
+
+======
+Union
+======
+
+const ComplexTypeTag = enum {
+    ok,
+    not_ok,
+};
+const ComplexType = union(ComplexTypeTag) {
+    ok: u8,
+    not_ok: void,
+};
+
+test "switch on tagged union" {
+    const c = ComplexType{ .ok = 42 };
+    try expectEqual(ComplexTypeTag.ok, @as(ComplexTypeTag, c));
+
+    switch (c) {
+        .ok => |value| try expectEqual(42, value),
+        .not_ok => unreachable,
+    }
+
+    switch (c) {
+        .ok => |_, tag| {
+            // Because we're in the '.ok' prong, 'tag' is compile-time known to be '.ok':
+            comptime std.debug.assert(tag == .ok);
+        },
+        .not_ok => unreachable,
+    }
+}
+
+test "get tag type" {
+    try expectEqual(ComplexTypeTag, std.meta.Tag(ComplexType));
+}
+    
+---
+
+(source_file
+  (global_variable_declaration
+    name: (identifier)
+    value: (enum_type
+      (container_field
+        type: (identifier))
+      (container_field
+        type: (identifier))))
+  (global_variable_declaration
+    name: (identifier)
+    value: (union_type
+      tag: (identifier)
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (variable_assignment_statement
+        name: (identifier)
+        value: (init_list_expression
+          (identifier)
+          (init_list
+            (list_item
+              field: (identifier)
+              (integer_literal)))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (access_expression
+              (identifier)
+              field: (identifier))
+            (builtin_function
+              (builtin_identifier)
+              (identifier)
+              (identifier)))))
+      (switch_expression
+        value: (identifier)
+        (switch_case
+          pattern: (inferred_superset
+            (identifier))
+          (ptr_index_payload
+            (identifier))
+          value: (try_expression
+            (call_expression
+              (identifier)
+              (integer_literal)
+              (identifier))))
+        (switch_case
+          pattern: (inferred_superset
+            (identifier))
+          value: (unreachable_literal)))
+      (switch_expression
+        value: (identifier)
+        (switch_case
+          pattern: (inferred_superset
+            (identifier))
+          (ptr_index_payload
+            (identifier)
+            (identifier))
+          value: (block
+            (line_comment)
+            (expression_statement
+              (comptime_expression
+                (call_expression
+                  (access_expression
+                    (access_expression
+                      (identifier)
+                      field: (identifier))
+                    field: (identifier))
+                  (binary_expression
+                    left: (identifier)
+                    right: (inferred_superset
+                      (identifier))))))))
+        (switch_case
+          pattern: (inferred_superset
+            (identifier))
+          value: (unreachable_literal)))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (identifier)
+            (call_expression
+              (access_expression
+                (access_expression
+                  (identifier)
+                  field: (identifier))
+                field: (identifier))
+              (identifier))))))))
+
+=======
+Opaque
+=======
+
+const Derp = opaque {};
+const Wat = opaque {};
+
+extern fn bar(d: *Derp) void;
+fn foo(w: *Wat) callconv(.c) void {
+    bar(w);
+}
+
+test "call foo" {
+    foo(undefined);
+}
+
+---
+
+(source_file
+  (global_variable_declaration
+    name: (identifier)
+    value: (opaque_type))
+  (global_variable_declaration
+    name: (identifier)
+    value: (opaque_type))
+  (extern_function_declaration
+    name: (identifier)
+    parameters: (parameters
+      (parameter
+        name: (identifier)
+        type: (pointer_type
+          (identifier))))
+    return_type: (primitive_type))
+  (function_declaration
+    name: (identifier)
+    parameters: (parameters
+      (parameter
+        name: (identifier)
+        type: (pointer_type
+          (identifier))))
+    (callconv
+      (inferred_superset
+        (identifier)))
+    return_type: (primitive_type)
+    (block
+      (expression_statement
+        (call_expression
+          (identifier)
+          (identifier)))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (expression_statement
+        (call_expression
+          (identifier)
+          (identifier))))))
+
+=======
+Switch
+=======
+
+test "switch simple" {
+    const a: u64 = 10;
+    const zz: u64 = 103;
+
+    // All branches of a switch expression must be able to be coerced to a
+    // common type.
+    //
+    // Branches cannot fallthrough. If fallthrough behavior is desired, combine
+    // the cases and use an if.
+    const b = switch (a) {
+        // Multiple cases can be combined via a ','
+        1, 2, 3 => 0,
+
+        // Ranges can be specified using the ... syntax. These are inclusive
+        // of both ends.
+        5...100 => 1,
+
+        // Branches can be arbitrarily complex.
+        101 => blk: {
+            const c: u64 = 5;
+            break :blk c * 2 + 1;
+        },
+
+        // Switching on arbitrary expressions is allowed as long as the
+        // expression is known at compile-time.
+        zz => zz,
+        blk: {
+            const d: u32 = 5;
+            const e: u32 = 100;
+            break :blk d + e;
+        } => 107,
+
+        // The else branch catches everything not already captured.
+        // Else branches are mandatory unless the entire range of values
+        // is handled.
+        else => 9,
+    };
+
+    try expectEqual(1, b);
+}
+
+// Switch expressions can be used outside a function:
+const os_msg = switch (builtin.target.os.tag) {
+    .linux => "we found a linux user",
+    else => "not a linux user",
+};
+
+// Inside a function, switch statements implicitly are compile-time
+// evaluated if the target expression is compile-time known.
+test "switch inside function" {
+    switch (builtin.target.os.tag) {
+        .fuchsia => {
+            // On an OS other than fuchsia, block is not even analyzed,
+            // so this compile error is not triggered.
+            // On fuchsia this compile error would be triggered.
+            @compileError("fuchsia not supported");
+        },
+        else => {},
+    }
+}
+
+---
+
+(source_file
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (variable_assignment_statement
+        name: (identifier)
+        type: (primitive_type)
+        value: (integer_literal))
+      (variable_assignment_statement
+        name: (identifier)
+        type: (primitive_type)
+        value: (integer_literal))
+      (line_comment)
+      (line_comment)
+      (line_comment)
+      (line_comment)
+      (line_comment)
+      (variable_assignment_statement
+        name: (identifier)
+        value: (switch_expression
+          value: (identifier)
+          (line_comment)
+          (switch_case
+            pattern: (integer_literal)
+            pattern: (integer_literal)
+            pattern: (integer_literal)
+            value: (integer_literal))
+          (line_comment)
+          (line_comment)
+          (switch_case
+            pattern: (integer_literal)
+            pattern: (integer_literal)
+            value: (integer_literal))
+          (line_comment)
+          (switch_case
+            pattern: (integer_literal)
+            value: (block_type_expression
+              (block_label
+                (identifier))
+              (block
+                (variable_assignment_statement
+                  name: (identifier)
+                  type: (primitive_type)
+                  value: (integer_literal))
+                (expression_statement
+                  (break_expression
+                    (break_label
+                      (identifier))
+                    (binary_expression
+                      left: (binary_expression
+                        left: (identifier)
+                        right: (integer_literal))
+                      right: (integer_literal)))))))
+          (line_comment)
+          (line_comment)
+          (switch_case
+            pattern: (identifier)
+            value: (identifier))
+          (switch_case
+            pattern: (block_type_expression
+              (block_label
+                (identifier))
+              (block
+                (variable_assignment_statement
+                  name: (identifier)
+                  type: (primitive_type)
+                  value: (integer_literal))
+                (variable_assignment_statement
+                  name: (identifier)
+                  type: (primitive_type)
+                  value: (integer_literal))
+                (expression_statement
+                  (break_expression
+                    (break_label
+                      (identifier))
+                    (binary_expression
+                      left: (identifier)
+                      right: (identifier))))))
+            value: (integer_literal))
+          (line_comment)
+          (line_comment)
+          (line_comment)
+          (switch_case
+            value: (integer_literal))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (identifier))))))
+  (line_comment)
+  (global_variable_declaration
+    name: (identifier)
+    value: (switch_expression
+      value: (access_expression
+        (access_expression
+          (access_expression
+            (identifier)
+            field: (identifier))
+          field: (identifier))
+        field: (identifier))
+      (switch_case
+        pattern: (inferred_superset
+          (identifier))
+        value: (string_literal
+          (string_literal_content)))
+      (switch_case
+        value: (string_literal
+          (string_literal_content)))))
+  (line_comment)
+  (line_comment)
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (switch_expression
+        value: (access_expression
+          (access_expression
+            (access_expression
+              (identifier)
+              field: (identifier))
+            field: (identifier))
+          field: (identifier))
+        (switch_case
+          pattern: (inferred_superset
+            (identifier))
+          value: (block
+            (line_comment)
+            (line_comment)
+            (line_comment)
+            (expression_statement
+              (builtin_function
+                (builtin_identifier)
+                (string_literal
+                  (string_literal_content))))))
+        (switch_case
+          value: (block))))))
+
+======
+While
+======
+
+test "while continue" {
+    var i: usize = 0;
+    while (true) {
+        i += 1;
+        if (i < 10)
+            continue;
+        break;
+    }
+    try expectEqual(10, i);
+}
+
+test "while loop continue expression" {
+    var i: usize = 0;
+    while (i < 10) : (i += 1) {}
+    try expectEqual(10, i);
+}
+
+test "while loop continue expression, more complicated" {
+    var i: usize = 1;
+    var j: usize = 1;
+    while (i * j < 2000) : ({
+        i *= 2;
+        j *= 3;
+    }) {
+        const my_ij = i * j;
+        try expect(my_ij < 2000);
+    }
+}
+
+test "while null capture" {
+    var sum1: u32 = 0;
+    numbers_left = 3;
+    while (eventuallyNullSequence()) |value| {
+        sum1 += value;
+    }
+    try expectEqual(3, sum1);
+
+    // null capture with an else block
+    var sum2: u32 = 0;
+    numbers_left = 3;
+    while (eventuallyNullSequence()) |value| {
+        sum2 += value;
+    } else {
+        try expectEqual(3, sum2);
+    }
+
+    // null capture with a continue expression
+    var i: u32 = 0;
+    var sum3: u32 = 0;
+    numbers_left = 3;
+    while (eventuallyNullSequence()) |value| : (i += 1) {
+        sum3 += value;
+    }
+    try expectEqual(3, i);
+}
+
+var numbers_left: u32 = undefined;
+fn eventuallyNullSequence() ?u32 {
+    return if (numbers_left == 0) null else blk: {
+        numbers_left -= 1;
+        break :blk numbers_left;
+    };
+}
+
+---
+
+(source_file
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (variable_assignment_statement
+        name: (identifier)
+        type: (primitive_type)
+        value: (integer_literal))
+      (while_statement
+        condition: (identifier)
+        value: (block_expression
+          (block
+            (variable_assignment_statement
+              left: (identifier)
+              right: (integer_literal))
+            (if_statement
+              condition: (binary_expression
+                left: (identifier)
+                right: (integer_literal))
+              consequence: (continue_expression))
+            (expression_statement
+              (break_expression)))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (identifier))))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (variable_assignment_statement
+        name: (identifier)
+        type: (primitive_type)
+        value: (integer_literal))
+      (while_statement
+        condition: (binary_expression
+          left: (identifier)
+          right: (integer_literal))
+        left: (identifier)
+        right: (integer_literal)
+        value: (block_expression
+          (block)))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (identifier))))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (variable_assignment_statement
+        name: (identifier)
+        type: (primitive_type)
+        value: (integer_literal))
+      (variable_assignment_statement
+        name: (identifier)
+        type: (primitive_type)
+        value: (integer_literal))
+      (while_statement
+        condition: (binary_expression
+          left: (binary_expression
+            left: (identifier)
+            right: (identifier))
+          right: (integer_literal))
+        continue_expression: (block
+          (variable_assignment_statement
+            left: (identifier)
+            right: (integer_literal))
+          (variable_assignment_statement
+            left: (identifier)
+            right: (integer_literal)))
+        value: (block_expression
+          (block
+            (variable_assignment_statement
+              name: (identifier)
+              value: (binary_expression
+                left: (identifier)
+                right: (identifier)))
+            (expression_statement
+              (try_expression
+                (call_expression
+                  (identifier)
+                  (binary_expression
+                    left: (identifier)
+                    right: (integer_literal))))))))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (variable_assignment_statement
+        name: (identifier)
+        type: (primitive_type)
+        value: (integer_literal))
+      (variable_assignment_statement
+        (identifier)
+        value: (integer_literal))
+      (while_statement
+        condition: (call_expression
+          (identifier))
+        (ptr_payload
+          (identifier))
+        value: (block_expression
+          (block
+            (variable_assignment_statement
+              left: (identifier)
+              right: (identifier)))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (identifier))))
+      (line_comment)
+      (variable_assignment_statement
+        name: (identifier)
+        type: (primitive_type)
+        value: (integer_literal))
+      (variable_assignment_statement
+        (identifier)
+        value: (integer_literal))
+      (while_statement
+        condition: (call_expression
+          (identifier))
+        (ptr_payload
+          (identifier))
+        value: (block_expression
+          (block
+            (variable_assignment_statement
+              left: (identifier)
+              right: (identifier))))
+        alternative: (block_expression
+          (block
+            (expression_statement
+              (try_expression
+                (call_expression
+                  (identifier)
+                  (integer_literal)
+                  (identifier)))))))
+      (line_comment)
+      (variable_assignment_statement
+        name: (identifier)
+        type: (primitive_type)
+        value: (integer_literal))
+      (variable_assignment_statement
+        name: (identifier)
+        type: (primitive_type)
+        value: (integer_literal))
+      (variable_assignment_statement
+        (identifier)
+        value: (integer_literal))
+      (while_statement
+        condition: (call_expression
+          (identifier))
+        (ptr_payload
+          (identifier))
+        left: (identifier)
+        right: (integer_literal)
+        value: (block_expression
+          (block
+            (variable_assignment_statement
+              left: (identifier)
+              right: (identifier)))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (identifier))))))
+  (global_variable_declaration
+    name: (identifier)
+    type: (primitive_type)
+    value: (identifier))
+  (function_declaration
+    name: (identifier)
+    parameters: (parameters)
+    return_type: (optional_type
+      (primitive_type))
+    (block
+      (expression_statement
+        (return_expression
+          (if_type_expression
+            condition: (binary_expression
+              left: (identifier)
+              right: (integer_literal))
+            value: (identifier)
+            alternative: (block_type_expression
+              (block_label
+                (identifier))
+              (block
+                (variable_assignment_statement
+                  left: (identifier)
+                  right: (integer_literal))
+                (expression_statement
+                  (break_expression
+                    (break_label
+                      (identifier))
+                    (identifier)))))))))))
+
+====
+For
+====
+
+test "for basics" {
+    const items = [_]i32{ 4, 5, 3, 4, 0 };
+    var sum: i32 = 0;
+
+    // For loops iterate over slices and arrays.
+    for (items) |value| {
+        // Break and continue are supported.
+        if (value == 0) {
+            continue;
+        }
+        sum += value;
+    }
+    try expectEqual(16, sum);
+
+    // To iterate over a portion of a slice, reslice.
+    for (items[0..1]) |value| {
+        sum += value;
+    }
+    try expectEqual(20, sum);
+
+    // To access the index of iteration, specify a second condition as well
+    // as a second capture value.
+    var sum2: i32 = 0;
+    for (items, 0..) |_, i| {
+        try expectEqual(usize, @TypeOf(i));
+        sum2 += @as(i32, @intCast(i));
+    }
+    try expectEqual(10, sum2);
+
+    // To iterate over consecutive integers, use the range syntax.
+    // Unbounded range is always a compile error.
+    var sum3: usize = 0;
+    for (0..5) |i| {
+        sum3 += i;
+    }
+    try expectEqual(10, sum3);
+}
+
+test "multi object for" {
+    const items = [_]usize{ 1, 2, 3 };
+    const items2 = [_]usize{ 4, 5, 6 };
+    var count: usize = 0;
+
+    // Iterate over multiple objects.
+    // All lengths must be equal at the start of the loop, otherwise detectable
+    // illegal behavior occurs.
+    for (items, items2) |i, j| {
+        count += i + j;
+    }
+
+    try expectEqual(21, count);
+}
+
+test "for reference" {
+    var items = [_]i32{ 3, 4, 2 };
+
+    // Iterate over the slice by reference by
+    // specifying that the capture value is a pointer.
+    for (&items) |*value| {
+        value.* += 1;
+    }
+
+    try expectEqual(4, items[0]);
+    try expectEqual(5, items[1]);
+    try expectEqual(3, items[2]);
+}
+
+test "for else" {
+    // For allows an else attached to it, the same as a while loop.
+    const items = [_]?i32{ 3, 4, null, 5 };
+
+    // For loops can also be used as expressions.
+    // Similar to while loops, when you break from a for loop, the else branch is not evaluated.
+    var sum: i32 = 0;
+    const result = for (items) |value| {
+        if (value != null) {
+            sum += value.?;
+        }
+    } else blk: {
+        try expectEqual(12, sum);
+        break :blk sum;
+    };
+    try expectEqual(12, result);
+}
+
+---
+
+(source_file
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (variable_assignment_statement
+        name: (identifier)
+        value: (init_list_expression
+          (array_type
+            (identifier)
+            (primitive_type))
+          (init_list
+            (integer_literal)
+            (integer_literal)
+            (integer_literal)
+            (integer_literal)
+            (integer_literal))))
+      (variable_assignment_statement
+        name: (identifier)
+        type: (primitive_type)
+        value: (integer_literal))
+      (line_comment)
+      (for_statement
+        pattern: (for_item
+          (identifier))
+        (ptr_list_payload
+          (identifier))
+        value: (block_expression
+          (block
+            (line_comment)
+            (if_statement
+              condition: (binary_expression
+                left: (identifier)
+                right: (integer_literal))
+              consequence: (block_expression
+                (block
+                  (expression_statement
+                    (continue_expression)))))
+            (variable_assignment_statement
+              left: (identifier)
+              right: (identifier)))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (identifier))))
+      (line_comment)
+      (for_statement
+        pattern: (for_item
+          (index_expression
+            (identifier)
+            (index_range
+              (integer_literal)
+              (integer_literal))))
+        (ptr_list_payload
+          (identifier))
+        value: (block_expression
+          (block
+            (variable_assignment_statement
+              left: (identifier)
+              right: (identifier)))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (identifier))))
+      (line_comment)
+      (line_comment)
+      (variable_assignment_statement
+        name: (identifier)
+        type: (primitive_type)
+        value: (integer_literal))
+      (for_statement
+        pattern: (for_item
+          (identifier))
+        pattern: (for_item
+          (integer_literal))
+        (ptr_list_payload
+          (identifier)
+          (identifier))
+        value: (block_expression
+          (block
+            (expression_statement
+              (try_expression
+                (call_expression
+                  (identifier)
+                  (primitive_type)
+                  (builtin_function
+                    (builtin_identifier)
+                    (identifier)))))
+            (variable_assignment_statement
+              left: (identifier)
+              right: (builtin_function
+                (builtin_identifier)
+                (primitive_type)
+                (builtin_function
+                  (builtin_identifier)
+                  (identifier)))))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (identifier))))
+      (line_comment)
+      (line_comment)
+      (variable_assignment_statement
+        name: (identifier)
+        type: (primitive_type)
+        value: (integer_literal))
+      (for_statement
+        pattern: (for_item
+          (integer_literal)
+          (integer_literal))
+        (ptr_list_payload
+          (identifier))
+        value: (block_expression
+          (block
+            (variable_assignment_statement
+              left: (identifier)
+              right: (identifier)))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (identifier))))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (variable_assignment_statement
+        name: (identifier)
+        value: (init_list_expression
+          (array_type
+            (identifier)
+            (primitive_type))
+          (init_list
+            (integer_literal)
+            (integer_literal)
+            (integer_literal))))
+      (variable_assignment_statement
+        name: (identifier)
+        value: (init_list_expression
+          (array_type
+            (identifier)
+            (primitive_type))
+          (init_list
+            (integer_literal)
+            (integer_literal)
+            (integer_literal))))
+      (variable_assignment_statement
+        name: (identifier)
+        type: (primitive_type)
+        value: (integer_literal))
+      (line_comment)
+      (line_comment)
+      (line_comment)
+      (for_statement
+        pattern: (for_item
+          (identifier))
+        pattern: (for_item
+          (identifier))
+        (ptr_list_payload
+          (identifier)
+          (identifier))
+        value: (block_expression
+          (block
+            (variable_assignment_statement
+              left: (identifier)
+              right: (binary_expression
+                left: (identifier)
+                right: (identifier))))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (identifier))))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (variable_assignment_statement
+        name: (identifier)
+        value: (init_list_expression
+          (array_type
+            (identifier)
+            (primitive_type))
+          (init_list
+            (integer_literal)
+            (integer_literal)
+            (integer_literal))))
+      (line_comment)
+      (line_comment)
+      (for_statement
+        pattern: (for_item
+          (unary_expression
+            (identifier)))
+        (ptr_list_payload
+          (identifier))
+        value: (block_expression
+          (block
+            (variable_assignment_statement
+              left: (unwrap_expression
+                (identifier))
+              right: (integer_literal)))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (index_expression
+              (identifier)
+              (index_range
+                (integer_literal))))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (index_expression
+              (identifier)
+              (index_range
+                (integer_literal))))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (index_expression
+              (identifier)
+              (index_range
+                (integer_literal))))))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (line_comment)
+      (variable_assignment_statement
+        name: (identifier)
+        value: (init_list_expression
+          (array_type
+            (identifier)
+            (optional_type
+              (primitive_type)))
+          (init_list
+            (integer_literal)
+            (integer_literal)
+            (identifier)
+            (integer_literal))))
+      (line_comment)
+      (line_comment)
+      (variable_assignment_statement
+        name: (identifier)
+        type: (primitive_type)
+        value: (integer_literal))
+      (variable_assignment_statement
+        name: (identifier)
+        value: (for_expression
+          pattern: (for_item
+            (identifier))
+          (ptr_list_payload
+            (identifier))
+          value: (block
+            (if_statement
+              condition: (binary_expression
+                left: (identifier)
+                right: (identifier))
+              consequence: (block_expression
+                (block
+                  (variable_assignment_statement
+                    left: (identifier)
+                    right: (unwrap_expression
+                      (identifier)))))))
+          alternative: (block_type_expression
+            (block_label
+              (identifier))
+            (block
+              (expression_statement
+                (try_expression
+                  (call_expression
+                    (identifier)
+                    (integer_literal)
+                    (identifier))))
+              (expression_statement
+                (break_expression
+                  (break_label
+                    (identifier))
+                  (identifier)))))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (identifier)))))))
+
+===
+If
+===
+
+test "if expression" {
+    // If expressions are used instead of a ternary expression.
+    const a: u32 = 5;
+    const b: u32 = 4;
+    const result = if (a != b) 47 else 3089;
+    try expectEqual(result, 47);
+}
+
+test "if boolean" {
+    // If expressions test boolean conditions.
+    const a: u32 = 5;
+    const b: u32 = 4;
+    if (a != b) {
+        try expect(true);
+    } else if (a == 9) {
+        unreachable;
+    } else {
+        unreachable;
+    }
+}
+
+test "if error union" {
+    // If expressions test for errors.
+    // Note the |err| capture on the else.
+
+    const a: anyerror!u32 = 0;
+    if (a) |value| {
+        try expectEqual(value, 0);
+    } else |err| {
+        _ = err;
+        unreachable;
+    }
+
+    const b: anyerror!u32 = error.BadValue;
+    if (b) |value| {
+        _ = value;
+        unreachable;
+    } else |err| {
+        try expectEqual(err, error.BadValue);
+    }
+
+    // The else and |err| capture is strictly required.
+    if (a) |value| {
+        try expectEqual(value, 0);
+    } else |_| {}
+
+    // To check only the error value, use an empty block expression.
+    if (b) |_| {} else |err| {
+        try expectEqual(err, error.BadValue);
+    }
+
+    // Access the value by reference using a pointer capture.
+    var c: anyerror!u32 = 3;
+    if (c) |*value| {
+        value.* = 9;
+    } else |_| {
+        unreachable;
+    }
+
+    if (c) |value| {
+        try expectEqual(value, 9);
+    } else |_| {
+        unreachable;
+    }
+}
+
+---
+
+(source_file
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (line_comment)
+      (variable_assignment_statement
+        name: (identifier)
+        type: (primitive_type)
+        value: (integer_literal))
+      (variable_assignment_statement
+        name: (identifier)
+        type: (primitive_type)
+        value: (integer_literal))
+      (variable_assignment_statement
+        name: (identifier)
+        value: (if_type_expression
+          condition: (binary_expression
+            left: (identifier)
+            right: (identifier))
+          value: (integer_literal)
+          alternative: (integer_literal)))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (identifier)
+            (integer_literal))))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (line_comment)
+      (variable_assignment_statement
+        name: (identifier)
+        type: (primitive_type)
+        value: (integer_literal))
+      (variable_assignment_statement
+        name: (identifier)
+        type: (primitive_type)
+        value: (integer_literal))
+      (if_statement
+        condition: (binary_expression
+          left: (identifier)
+          right: (identifier))
+        consequence: (block_expression
+          (block
+            (expression_statement
+              (try_expression
+                (call_expression
+                  (identifier)
+                  (identifier))))))
+        alternative: (if_statement
+          condition: (binary_expression
+            left: (identifier)
+            right: (integer_literal))
+          consequence: (block_expression
+            (block
+              (expression_statement
+                (unreachable_literal))))
+          alternative: (block_expression
+            (block
+              (expression_statement
+                (unreachable_literal))))))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (line_comment)
+      (line_comment)
+      (variable_assignment_statement
+        name: (identifier)
+        type: (error_union
+          (primitive_type)
+          (primitive_type))
+        value: (integer_literal))
+      (if_statement
+        condition: (identifier)
+        (ptr_payload
+          (identifier))
+        consequence: (block_expression
+          (block
+            (expression_statement
+              (try_expression
+                (call_expression
+                  (identifier)
+                  (identifier)
+                  (integer_literal))))))
+        alternative: (payload
+          (identifier))
+        alternative: (block_expression
+          (block
+            (variable_assignment_statement
+              (identifier)
+              value: (identifier))
+            (expression_statement
+              (unreachable_literal)))))
+      (variable_assignment_statement
+        name: (identifier)
+        type: (error_union
+          (primitive_type)
+          (primitive_type))
+        value: (error_subset
+          (identifier)))
+      (if_statement
+        condition: (identifier)
+        (ptr_payload
+          (identifier))
+        consequence: (block_expression
+          (block
+            (variable_assignment_statement
+              (identifier)
+              value: (identifier))
+            (expression_statement
+              (unreachable_literal))))
+        alternative: (payload
+          (identifier))
+        alternative: (block_expression
+          (block
+            (expression_statement
+              (try_expression
+                (call_expression
+                  (identifier)
+                  (identifier)
+                  (error_subset
+                    (identifier))))))))
+      (line_comment)
+      (if_statement
+        condition: (identifier)
+        (ptr_payload
+          (identifier))
+        consequence: (block_expression
+          (block
+            (expression_statement
+              (try_expression
+                (call_expression
+                  (identifier)
+                  (identifier)
+                  (integer_literal))))))
+        alternative: (payload
+          (identifier))
+        alternative: (block_expression
+          (block)))
+      (line_comment)
+      (if_statement
+        condition: (identifier)
+        (ptr_payload
+          (identifier))
+        consequence: (block_expression
+          (block))
+        alternative: (payload
+          (identifier))
+        alternative: (block_expression
+          (block
+            (expression_statement
+              (try_expression
+                (call_expression
+                  (identifier)
+                  (identifier)
+                  (error_subset
+                    (identifier))))))))
+      (line_comment)
+      (variable_assignment_statement
+        name: (identifier)
+        type: (error_union
+          (primitive_type)
+          (primitive_type))
+        value: (integer_literal))
+      (if_statement
+        condition: (identifier)
+        (ptr_payload
+          (identifier))
+        consequence: (block_expression
+          (block
+            (variable_assignment_statement
+              (unwrap_expression
+                (identifier))
+              value: (integer_literal))))
+        alternative: (payload
+          (identifier))
+        alternative: (block_expression
+          (block
+            (expression_statement
+              (unreachable_literal)))))
+      (if_statement
+        condition: (identifier)
+        (ptr_payload
+          (identifier))
+        consequence: (block_expression
+          (block
+            (expression_statement
+              (try_expression
+                (call_expression
+                  (identifier)
+                  (identifier)
+                  (integer_literal))))))
+        alternative: (payload
+          (identifier))
+        alternative: (block_expression
+          (block
+            (expression_statement
+              (unreachable_literal))))))))
+
+=========
+Variadic
+=========
+
+pub extern "c" fn printf(format: [*:0]const u8, ...) c_int;
+
+test "variadic function" {
+    try testing.expectEqual(14, printf("Hello, world!\n"));
+    try testing.expect(@typeInfo(@TypeOf(printf)).@"fn".is_var_args);
+}
+
+fn add(count: c_int, ...) callconv(.c) c_int {
+    var ap = @cVaStart();
+    defer @cVaEnd(&ap);
+    var i: usize = 0;
+    var sum: c_int = 0;
+    while (i < count) : (i += 1) {
+        sum += @cVaArg(&ap, c_int);
+    }
+    return sum;
+}
+
+test "defining a variadic function" {
+    if (builtin.cpu.arch == .aarch64 and builtin.os.tag != .macos) {
+        // https://github.com/ziglang/zig/issues/14096
+        return error.SkipZigTest;
+    }
+    if (builtin.cpu.arch == .x86_64 and builtin.os.tag == .windows) {
+        // https://github.com/ziglang/zig/issues/16961
+        return error.SkipZigTest;
+    }
+    if (builtin.cpu.arch == .s390x) {
+        // https://github.com/ziglang/zig/issues/21350#issuecomment-3543006475
+        return error.SkipZigTest;
+    }
+
+    try std.testing.expectEqual(@as(c_int, 0), add(0));
+    try std.testing.expectEqual(@as(c_int, 1), add(1, @as(c_int, 1)));
+    try std.testing.expectEqual(@as(c_int, 3), add(2, @as(c_int, 1), @as(c_int, 2)));
+}
+
+---
+
+(source_file
+  (extern_function_declaration
+    layout: (string_literal
+      (string_literal_content))
+    name: (identifier)
+    parameters: (parameters
+      (parameter
+        name: (identifier)
+        type: (many_pointer_type
+          (integer_literal)
+          (ptr_mods)
+          (primitive_type))))
+    return_type: (primitive_type))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (expression_statement
+        (try_expression
+          (call_expression
+            (access_expression
+              (identifier)
+              field: (identifier))
+            (integer_literal)
+            (call_expression
+              (identifier)
+              (string_literal
+                (string_literal_content)
+                (escape_sequence))))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (access_expression
+              (identifier)
+              field: (identifier))
+            (access_expression
+              (access_expression
+                (builtin_function
+                  (builtin_identifier)
+                  (builtin_function
+                    (builtin_identifier)
+                    (identifier)))
+                field: (identifier))
+              field: (identifier)))))))
+  (function_declaration
+    name: (identifier)
+    parameters: (parameters
+      (parameter
+        name: (identifier)
+        type: (primitive_type)))
+    (callconv
+      (inferred_superset
+        (identifier)))
+    return_type: (primitive_type)
+    (block
+      (variable_assignment_statement
+        name: (identifier)
+        value: (builtin_function
+          (builtin_identifier)))
+      (defer_statement
+        (builtin_function
+          (builtin_identifier)
+          (unary_expression
+            (identifier))))
+      (variable_assignment_statement
+        name: (identifier)
+        type: (primitive_type)
+        value: (integer_literal))
+      (variable_assignment_statement
+        name: (identifier)
+        type: (primitive_type)
+        value: (integer_literal))
+      (while_statement
+        condition: (binary_expression
+          left: (identifier)
+          right: (identifier))
+        left: (identifier)
+        right: (integer_literal)
+        value: (block_expression
+          (block
+            (variable_assignment_statement
+              left: (identifier)
+              right: (builtin_function
+                (builtin_identifier)
+                (unary_expression
+                  (identifier))
+                (primitive_type))))))
+      (expression_statement
+        (return_expression
+          (identifier)))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (if_statement
+        condition: (binary_expression
+          left: (binary_expression
+            left: (access_expression
+              (access_expression
+                (identifier)
+                field: (identifier))
+              field: (identifier))
+            right: (inferred_superset
+              (identifier)))
+          right: (binary_expression
+            left: (access_expression
+              (access_expression
+                (identifier)
+                field: (identifier))
+              field: (identifier))
+            right: (inferred_superset
+              (identifier))))
+        consequence: (block_expression
+          (block
+            (line_comment)
+            (expression_statement
+              (return_expression
+                (error_subset
+                  (identifier)))))))
+      (if_statement
+        condition: (binary_expression
+          left: (binary_expression
+            left: (access_expression
+              (access_expression
+                (identifier)
+                field: (identifier))
+              field: (identifier))
+            right: (inferred_superset
+              (identifier)))
+          right: (binary_expression
+            left: (access_expression
+              (access_expression
+                (identifier)
+                field: (identifier))
+              field: (identifier))
+            right: (inferred_superset
+              (identifier))))
+        consequence: (block_expression
+          (block
+            (line_comment)
+            (expression_statement
+              (return_expression
+                (error_subset
+                  (identifier)))))))
+      (if_statement
+        condition: (binary_expression
+          left: (access_expression
+            (access_expression
+              (identifier)
+              field: (identifier))
+            field: (identifier))
+          right: (inferred_superset
+            (identifier)))
+        consequence: (block_expression
+          (block
+            (line_comment)
+            (expression_statement
+              (return_expression
+                (error_subset
+                  (identifier)))))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (access_expression
+              (access_expression
+                (identifier)
+                field: (identifier))
+              field: (identifier))
+            (builtin_function
+              (builtin_identifier)
+              (primitive_type)
+              (integer_literal))
+            (call_expression
+              (identifier)
+              (integer_literal)))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (access_expression
+              (access_expression
+                (identifier)
+                field: (identifier))
+              field: (identifier))
+            (builtin_function
+              (builtin_identifier)
+              (primitive_type)
+              (integer_literal))
+            (call_expression
+              (identifier)
+              (integer_literal)
+              (builtin_function
+                (builtin_identifier)
+                (primitive_type)
+                (integer_literal))))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (access_expression
+              (access_expression
+                (identifier)
+                field: (identifier))
+              field: (identifier))
+            (builtin_function
+              (builtin_identifier)
+              (primitive_type)
+              (integer_literal))
+            (call_expression
+              (identifier)
+              (integer_literal)
+              (builtin_function
+                (builtin_identifier)
+                (primitive_type)
+                (integer_literal))
+              (builtin_function
+                (builtin_identifier)
+                (primitive_type)
+                (integer_literal)))))))))

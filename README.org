@@ -1,0 +1,26 @@
+* tree-sitter-zig
+
+Zig grammar for [[https://github.com/tree-sitter/tree-sitter][tree-sitter]]
+
+** References
+
++ [[https://ziglang.org/documentation/0.16.0/][Zig 0.16 Documentation]]
++ [[https://codeberg.org/ziglang/zig-spec][Zig Programming Language Specification]]
++ [[https://codeberg.org/ziglang/zig/src/branch/master/doc/langref][Zig langref]]
+
+** Licence Notice
+
+Some tests in this repository are derived from [[https://codeberg.org/ziglang/zig][zig source code]], which is
+licensed under the MIT License.
+
+The original tests have been modified for use in this project. The original
+copyright notice and MIT License apply to the portions derived from that
+project.
+
+** Planning
+
+*** TODO Queries
+
+**** TODO Assembly Injection ?
+
+**** TODO Tags

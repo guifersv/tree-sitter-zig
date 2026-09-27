@@ -1,0 +1,144 @@
+======
+Defer
+======
+
+const std = @import("std");
+const expectEqual = std.testing.expectEqual;
+const print = std.debug.print;
+
+fn deferExample() !usize {
+    var a: usize = 1;
+
+    {
+        defer a = 2;
+        a = 1;
+    }
+    try expectEqual(2, a);
+
+    a = 5;
+    return a;
+}
+
+test "defer basics" {
+    try expectEqual(5, (try deferExample()));
+}
+
+fn createFoo(param: i32) !Foo {
+    const foo = try tryToAllocateFoo();
+
+    errdefer deallocateFoo(foo);
+
+    const tmp_buf = allocateTmpBuffer() orelse return error.OutOfMemory;
+
+    defer deallocateTmpBuffer(tmp_buf);
+
+    if (param > 1337) return error.InvalidParam;
+
+
+    return foo;
+}
+
+---
+
+(source_file
+  (global_variable_declaration
+    name: (identifier)
+    value: (builtin_function
+      (builtin_identifier)
+      (string_literal
+        (string_literal_content))))
+  (global_variable_declaration
+    name: (identifier)
+    value: (access_expression
+      (access_expression
+        (identifier)
+        field: (identifier))
+      field: (identifier)))
+  (global_variable_declaration
+    name: (identifier)
+    value: (access_expression
+      (access_expression
+        (identifier)
+        field: (identifier))
+      field: (identifier)))
+  (function_declaration
+    name: (identifier)
+    parameters: (parameters)
+    return_type: (primitive_type)
+    (block
+      (variable_assignment_statement
+        name: (identifier)
+        type: (primitive_type)
+        value: (integer_literal))
+      (block_expression
+        (block
+          (defer_statement
+            left: (identifier)
+            right: (integer_literal))
+          (variable_assignment_statement
+            (identifier)
+            value: (integer_literal))))
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (identifier))))
+      (variable_assignment_statement
+        (identifier)
+        value: (integer_literal))
+      (expression_statement
+        (return_expression
+          (identifier)))))
+  (test_declaration
+    doctest_name: (string_literal
+      (string_literal_content))
+    body: (block
+      (expression_statement
+        (try_expression
+          (call_expression
+            (identifier)
+            (integer_literal)
+            (grouped_expression
+              (try_expression
+                (call_expression
+                  (identifier)))))))))
+  (function_declaration
+    name: (identifier)
+    parameters: (parameters
+      (parameter
+        name: (identifier)
+        type: (primitive_type)))
+    return_type: (identifier)
+    (block
+      (variable_assignment_statement
+        name: (identifier)
+        value: (try_expression
+          (call_expression
+            (identifier))))
+      (errdefer_statement
+        (call_expression
+          (identifier)
+          (identifier)))
+      (variable_assignment_statement
+        name: (identifier)
+        value: (binary_expression
+          left: (call_expression
+            (identifier))
+          right: (return_expression
+            (error_subset
+              (identifier)))))
+      (defer_statement
+        (call_expression
+          (identifier)
+          (identifier)))
+      (if_statement
+        condition: (binary_expression
+          left: (identifier)
+          right: (integer_literal))
+        consequence: (return_expression
+          (error_subset
+            (identifier))))
+      (expression_statement
+        (return_expression
+          (identifier))))))

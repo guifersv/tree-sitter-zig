@@ -1,0 +1,636 @@
+====
+Asm
+====
+
+pub fn main() noreturn {
+    const msg = "hello world\n";
+    _ = syscall3(SYS_write, STDOUT_FILENO, @intFromPtr(msg), msg.len);
+    _ = syscall1(SYS_exit, 0);
+    unreachable;
+}
+
+pub const SYS_write = 1;
+pub const SYS_exit = 60;
+
+pub const STDOUT_FILENO = 1;
+
+pub fn syscall1(number: usize, arg1: usize) usize {
+    return asm volatile ("syscall"
+        : [ret] "={rax}" (-> usize),
+        : [number] "{rax}" (number),
+          [arg1] "{rdi}" (arg1),
+        : .{ .rcx = true, .r11 = true });
+}
+
+pub fn syscall3(number: usize, arg1: usize, arg2: usize, arg3: usize) usize {
+    return asm volatile ("syscall"
+        : [ret] "={rax}" (-> usize),
+        : [number] "{rax}" (number),
+          [arg1] "{rdi}" (arg1),
+          [arg2] "{rsi}" (arg2),
+          [arg3] "{rdx}" (arg3),
+        : .{ .rcx = true, .r11 = true });
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    parameters: (parameters)
+    return_type: (primitive_type)
+    (block
+      (variable_assignment_statement
+        name: (identifier)
+        value: (string_literal
+          (string_literal_content)
+          (escape_sequence)))
+      (variable_assignment_statement
+        (identifier)
+        value: (call_expression
+          (identifier)
+          (identifier)
+          (identifier)
+          (builtin_function
+            (builtin_identifier)
+            (identifier))
+          (access_expression
+            (identifier)
+            field: (identifier))))
+      (variable_assignment_statement
+        (identifier)
+        value: (call_expression
+          (identifier)
+          (identifier)
+          (integer_literal)))
+      (expression_statement
+        (unreachable_literal))))
+  (global_variable_declaration
+    name: (identifier)
+    value: (integer_literal))
+  (global_variable_declaration
+    name: (identifier)
+    value: (integer_literal))
+  (global_variable_declaration
+    name: (identifier)
+    value: (integer_literal))
+  (function_declaration
+    name: (identifier)
+    parameters: (parameters
+      (parameter
+        name: (identifier)
+        type: (primitive_type))
+      (parameter
+        name: (identifier)
+        type: (primitive_type)))
+    return_type: (primitive_type)
+    (block
+      (expression_statement
+        (return_expression
+          (asm_expression
+            (string_literal
+              (string_literal_content))
+            (asm_output
+              (asm_output_item
+                (identifier)
+                (string_literal
+                  (string_literal_content))
+                (primitive_type))
+              (asm_input
+                (asm_input_item
+                  (identifier)
+                  (string_literal
+                    (string_literal_content))
+                  (identifier))
+                (asm_input_item
+                  (identifier)
+                  (string_literal
+                    (string_literal_content))
+                  (identifier))
+                (asm_clobbers
+                  (inferred_init_list
+                    (init_list
+                      (list_item
+                        field: (identifier)
+                        (identifier))
+                      (list_item
+                        field: (identifier)
+                        (identifier))))))))))))
+  (function_declaration
+    name: (identifier)
+    parameters: (parameters
+      (parameter
+        name: (identifier)
+        type: (primitive_type))
+      (parameter
+        name: (identifier)
+        type: (primitive_type))
+      (parameter
+        name: (identifier)
+        type: (primitive_type))
+      (parameter
+        name: (identifier)
+        type: (primitive_type)))
+    return_type: (primitive_type)
+    (block
+      (expression_statement
+        (return_expression
+          (asm_expression
+            (string_literal
+              (string_literal_content))
+            (asm_output
+              (asm_output_item
+                (identifier)
+                (string_literal
+                  (string_literal_content))
+                (primitive_type))
+              (asm_input
+                (asm_input_item
+                  (identifier)
+                  (string_literal
+                    (string_literal_content))
+                  (identifier))
+                (asm_input_item
+                  (identifier)
+                  (string_literal
+                    (string_literal_content))
+                  (identifier))
+                (asm_input_item
+                  (identifier)
+                  (string_literal
+                    (string_literal_content))
+                  (identifier))
+                (asm_input_item
+                  (identifier)
+                  (string_literal
+                    (string_literal_content))
+                  (identifier))
+                (asm_clobbers
+                  (inferred_init_list
+                    (init_list
+                      (list_item
+                        field: (identifier)
+                        (identifier))
+                      (list_item
+                        field: (identifier)
+                        (identifier)))))))))))))
+
+========================
+Keywords must be quoted
+========================
+
+// https://ziggit.dev/t/primitive-type-as-field-access-expression/17714
+const Foo = struct {
+    const @"true": i32 = 0; // primitive
+    const @"struct": i32 = 0; // keyword
+
+    false: i32, // primitive
+    @"union": i32, // keyword
+
+    comptime {
+        assert(@"true" == 0); // direct decl access
+        assert(@"struct" == 0);
+        assert(Foo.true == 0); // namespace field access
+        assert(Foo.@"struct" == 0);
+
+        const f: Foo = .{ .false = 0, .@"union" = 0 };
+        assert(f.false == 0);
+        assert(f.@"union" == 0);
+
+        _ = .true;
+        _ = .@"struct";
+    }
+};
+
+---
+
+(source_file
+  (line_comment)
+  (global_variable_declaration
+    name: (identifier)
+    value: (struct_type
+      (global_variable_declaration
+        name: (identifier)
+        type: (primitive_type)
+        value: (integer_literal))
+      (line_comment)
+      (global_variable_declaration
+        name: (identifier)
+        type: (primitive_type)
+        value: (integer_literal))
+      (line_comment)
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (line_comment)
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (line_comment)
+      (comptime_declaration
+        body: (block
+          (expression_statement
+            (call_expression
+              (identifier)
+              (binary_expression
+                left: (identifier)
+                right: (integer_literal))))
+          (line_comment)
+          (expression_statement
+            (call_expression
+              (identifier)
+              (binary_expression
+                left: (identifier)
+                right: (integer_literal))))
+          (expression_statement
+            (call_expression
+              (identifier)
+              (binary_expression
+                left: (access_expression
+                  (identifier)
+                  field: (identifier))
+                right: (integer_literal))))
+          (line_comment)
+          (expression_statement
+            (call_expression
+              (identifier)
+              (binary_expression
+                left: (access_expression
+                  (identifier)
+                  field: (identifier))
+                right: (integer_literal))))
+          (variable_assignment_statement
+            name: (identifier)
+            type: (identifier)
+            value: (inferred_init_list
+              (init_list
+                (list_item
+                  field: (identifier)
+                  (integer_literal))
+                (list_item
+                  field: (identifier)
+                  (integer_literal)))))
+          (expression_statement
+            (call_expression
+              (identifier)
+              (binary_expression
+                left: (access_expression
+                  (identifier)
+                  field: (identifier))
+                right: (integer_literal))))
+          (expression_statement
+            (call_expression
+              (identifier)
+              (binary_expression
+                left: (access_expression
+                  (identifier)
+                  field: (identifier))
+                right: (integer_literal))))
+          (variable_assignment_statement
+            (identifier)
+            value: (inferred_superset
+              (identifier)))
+          (variable_assignment_statement
+            (identifier)
+            value: (inferred_superset
+              (identifier))))))))
+
+=================
+Type Identifiers
+=================
+
+const Foo = struct {
+    true: bool,
+    false: bool,
+    null: bool,
+    undefined: bool,
+    isize: bool,
+    usize: bool,
+    c_char: bool,
+    c_short: bool,
+    c_ushort: bool,
+    c_int: bool,
+    c_uint: bool,
+    c_long: bool,
+    c_ulong: bool,
+    c_longlong: bool,
+    c_ulonglong: bool,
+    c_longdouble: bool,
+    f16: bool,
+    f32: bool,
+    f64: bool,
+    f80: bool,
+    f128: bool,
+    bool: bool,
+    anyopaque: bool,
+    void: bool,
+    noreturn: bool,
+    type: bool,
+    anyerror: bool,
+    comptime_int: bool,
+    comptime_float: bool,
+};
+
+---
+
+(source_file
+  (global_variable_declaration
+    name: (identifier)
+    value: (struct_type
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type))
+      (container_field
+        name: (identifier)
+        type: (primitive_type)))))
+
+==============
+If expression
+==============
+
+pub fn systemIntegrationOption(
+    b: *Build,
+    name: []const u8,
+    config: SystemIntegrationOptionConfig,
+) bool {
+    const graph = b.graph;
+    const arena = graph.arena;
+    const gop = graph.system_integration_options.getOrPut(arena, name) catch @panic("OOM");
+    if (gop.found_existing) switch (gop.value_ptr.*) {
+        .user_disabled => {
+            gop.value_ptr.* = .declared_disabled;
+            return false;
+        },
+        .user_enabled => {
+            gop.value_ptr.* = .declared_enabled;
+            return true;
+        },
+        .declared_disabled => return false,
+        .declared_enabled => return true,
+    } else {
+        gop.key_ptr.* = graph.dupeString(name);
+        if (config.default orelse graph.system_package_mode) {
+            gop.value_ptr.* = .declared_enabled;
+            return true;
+        } else {
+            gop.value_ptr.* = .declared_disabled;
+            return false;
+        }
+    }
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    parameters: (parameters
+      (parameter
+        name: (identifier)
+        type: (pointer_type
+          (identifier)))
+      (parameter
+        name: (identifier)
+        type: (slice_type
+          (ptr_mods)
+          (primitive_type)))
+      (parameter
+        name: (identifier)
+        type: (identifier)))
+    return_type: (primitive_type)
+    (block
+      (variable_assignment_statement
+        name: (identifier)
+        value: (access_expression
+          (identifier)
+          field: (identifier)))
+      (variable_assignment_statement
+        name: (identifier)
+        value: (access_expression
+          (identifier)
+          field: (identifier)))
+      (variable_assignment_statement
+        name: (identifier)
+        value: (catch_expression
+          (call_expression
+            (access_expression
+              (access_expression
+                (identifier)
+                field: (identifier))
+              field: (identifier))
+            (identifier)
+            (identifier))
+          (builtin_function
+            (builtin_identifier)
+            (string_literal
+              (string_literal_content)))))
+      (if_statement
+        condition: (access_expression
+          (identifier)
+          field: (identifier))
+        consequence: (switch_expression
+          value: (unwrap_expression
+            (access_expression
+              (identifier)
+              field: (identifier)))
+          (switch_case
+            pattern: (inferred_superset
+              (identifier))
+            value: (block
+              (variable_assignment_statement
+                (unwrap_expression
+                  (access_expression
+                    (identifier)
+                    field: (identifier)))
+                value: (inferred_superset
+                  (identifier)))
+              (expression_statement
+                (return_expression
+                  (identifier)))))
+          (switch_case
+            pattern: (inferred_superset
+              (identifier))
+            value: (block
+              (variable_assignment_statement
+                (unwrap_expression
+                  (access_expression
+                    (identifier)
+                    field: (identifier)))
+                value: (inferred_superset
+                  (identifier)))
+              (expression_statement
+                (return_expression
+                  (identifier)))))
+          (switch_case
+            pattern: (inferred_superset
+              (identifier))
+            value: (return_expression
+              (identifier)))
+          (switch_case
+            pattern: (inferred_superset
+              (identifier))
+            value: (return_expression
+              (identifier))))
+        alternative: (block_expression
+          (block
+            (variable_assignment_statement
+              (unwrap_expression
+                (access_expression
+                  (identifier)
+                  field: (identifier)))
+              value: (call_expression
+                (access_expression
+                  (identifier)
+                  field: (identifier))
+                (identifier)))
+            (if_statement
+              condition: (binary_expression
+                left: (access_expression
+                  (identifier)
+                  field: (identifier))
+                right: (access_expression
+                  (identifier)
+                  field: (identifier)))
+              consequence: (block_expression
+                (block
+                  (variable_assignment_statement
+                    (unwrap_expression
+                      (access_expression
+                        (identifier)
+                        field: (identifier)))
+                    value: (inferred_superset
+                      (identifier)))
+                  (expression_statement
+                    (return_expression
+                      (identifier)))))
+              alternative: (block_expression
+                (block
+                  (variable_assignment_statement
+                    (unwrap_expression
+                      (access_expression
+                        (identifier)
+                        field: (identifier)))
+                    value: (inferred_superset
+                      (identifier)))
+                  (expression_statement
+                    (return_expression
+                      (identifier))))))))))))
+
+=================
+Index expression
+=================
+
+test {
+    const a = a[0..:1];
+    const a = a[0.. l: { break :l 1; } :0];
+}
+
+---
+
+(source_file
+  (test_declaration
+    body: (block
+      (variable_assignment_statement
+        name: (identifier)
+        value: (index_expression
+          (identifier)
+          (index_range
+            (integer_literal)
+            (integer_literal))))
+      (variable_assignment_statement
+        name: (identifier)
+        value: (index_expression
+          (identifier)
+          (index_range
+            (integer_literal)
+            (block_type_expression
+              (block_label
+                (identifier))
+              (block
+                (expression_statement
+                  (break_expression
+                    (break_label
+                      (identifier))
+                    (integer_literal)))))
+            (integer_literal)))))))
