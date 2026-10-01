@@ -1,4 +1,9 @@
 
+;; Assume TitleCaseTypeName
+
+((identifier) @type
+ (#match? @type "^[A-Z]"))
+
 ; Comments
 
 [
@@ -21,12 +26,12 @@
 
 (escape_sequence) @escape
 
-; Identifiers
+;; Types
 
 (primitive_type) @type.builtin
 (anyframe_type) @type.builtin
 
-; Definitions
+;; Definitions
 
 [
  "("
@@ -42,105 +47,28 @@
  "." 
  "," 
  ";"
+ "|"
  ] @punctuation.delimiter
 
 [
- "addrspace"
- "align"
- "allowzero"
- "and"
- "anytype"
- "asm"
- "break"
- "callconv"
- "catch"
- "comptime"
- "const"
- "continue"
- "defer"
- "else"
- "enum"
- "errdefer"
- "error"
- "export"
- "extern"
- "fn"
- "for"
- "if"
- "inline"
- "noalias"
- "nosuspend"
- "noinline"
- "opaque"
- "or"
- "orelse"
- "packed"
- "pub"
- "return"
- "linksection"
- "struct"
- "suspend"
- "switch"
- "test"
- "threadlocal"
- "try"
- "union"
- "var"
- "volatile"
- "while"
+ "addrspace" "align" "allowzero" "and" "anytype" "asm"
+ "break" "callconv" "catch" "comptime" "const" "continue"
+ "defer" "else" "enum" "errdefer" "error" "export" "extern"
+ "fn" "for" "if" "inline" "noalias" "nosuspend" "noinline"
+ "opaque" "or" "orelse" "packed" "pub" "return" "linksection"
+ "struct" "suspend" "switch" "test" "threadlocal" "try" "union"
+ "var" "volatile" "while"
  ] @keyword
 
 [
- "*="
- "*|="
- "/="
- "%="
- "+="
- "+|="
- "-="
- "-|="
- "<<="
- "<<|="
- ">>="
- "&="
- "^="
- "|="
- "*%="
- "+%="
-
- "*"
- "/"
- "%"
- "*%"
- "*|"
- "||"
- "**"
-
- "+"
- "-"
- "++"
- "+%"
- "-%"
- "+|"
- "-|"
-
- "<<"
- ">>"
- "<<|"
-
- "&"
- "^"
- "|"
-
- "=="
- "!="
- "<"
- ">"
- "<="
- ">="
-
- "orelse"
- "catch"
+ "&" "&=" "*" "*=" "*%" "*%=" "*|"
+ "*|=" "^" "^=" ".." "..." ".*" "="
+ "==" "=>" "!" "!=" "<" "<<" "<<="
+ "<<|" "<<|=" "<=" "-" "-=" "-%"
+ "-%=" "-|" "-|=" "->" "%" "%=" "|"
+ "||" "|=" "+" "++" "+=" "+%" "+%="
+ "+|" "+|=" "?" ">" ">>" ">>=" ">="
+ "~" "orelse" "catch"
  ] @operator
 
 (parameter
@@ -158,7 +86,7 @@
 (ptr_index_payload
  (identifier) @variable.parameter)
 
-; Identifiers
+;; Identifiers
 
 (container_field
  name: (identifier) @variable.member)
@@ -190,7 +118,7 @@
 (error_subset
  (identifier) @constant)
 
-; Function
+;; Functions
 
 (builtin_function
  (builtin_identifier) @function.builtin)
@@ -210,7 +138,3 @@
 
 (extern_function_declaration
  name: (identifier) @function)
-
-; Assume TitleCaseTypeName
-((identifier) @constant
- (#match? @constant "^[A-Z]"))

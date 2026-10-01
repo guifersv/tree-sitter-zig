@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.13)
 
 project(tree-sitter-zig
-        VERSION "0.1.0"
+        VERSION "0.1.1"
         DESCRIPTION "Zig grammar for tree-sitter"
-        HOMEPAGE_URL "https://codeberg.org/guifersv/tree-sitter-zig"
+        HOMEPAGE_URL "https://github.com/guifersv/tree-sitter-zig"
         LANGUAGES C)
 
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)

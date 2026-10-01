@@ -1,4 +1,4 @@
-module codeberg.org/guifersv/tree-sitter-zig
+module github.com/guifersv/tree-sitter-zig
 
 go 1.22
 
