@@ -1,13 +1,13 @@
 [package]
 name = "tree-sitter-zig"
 description = "Zig grammar for tree-sitter"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Guilherme Fernandes <gui.fer.sv@gmail.com>"]
 license = "GPL-3.0-only"
 readme = "README.md"
 keywords = ["incremental", "parsing", "tree-sitter", "zig"]
 categories = ["parser-implementations", "parsing", "text-editors"]
-repository = "https://codeberg.org/guifersv/tree-sitter-zig"
+repository = "https://github.com/guifersv/tree-sitter-zig"
 edition = "2021"
 autoexamples = false
 

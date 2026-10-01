@@ -1,6 +1,6 @@
 LANGUAGE_NAME := tree-sitter-zig
-HOMEPAGE_URL := https://codeberg.org/guifersv/tree-sitter-zig
-VERSION := 0.1.0
+HOMEPAGE_URL := https://github.com/guifersv/tree-sitter-zig
+VERSION := 0.1.1
 
 # repository
 SRC_DIR := src

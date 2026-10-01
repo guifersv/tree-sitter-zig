@@ -1,41 +1,48 @@
 {
-    "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
-    "grammars": [
-        {
-            "name": "zig",
-            "camelcase": "Zig",
-            "title": "Zig",
-            "scope": "source.zig",
-            "file-types": ["zig"],
-            "injection-regex": "^zig$",
-            "class-name": "TreeSitterZig",
-            "highlights": ["queries/highlights.scm"]
-        }
-    ],
-    "metadata": {
-        "version": "0.1.0",
-        "license": "GPL-3.0-only",
-        "description": "Zig grammar for tree-sitter",
-        "authors": [
-            {
-                "name": "Guilherme Fernandes",
-                "email": "gui.fer.sv@gmail.com",
-                "url": ""
-            }
-        ],
-        "links": {
-            "repository": "https://codeberg.org/guifersv/tree-sitter-zig",
-            "funding": ""
-        }
-    },
-    "bindings": {
-        "c": true,
-        "go": true,
-        "java": false,
-        "node": true,
-        "python": true,
-        "rust": true,
-        "swift": true,
-        "zig": false
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "zig",
+      "camelcase": "Zig",
+      "title": "Zig",
+      "scope": "source.zig",
+      "file-types": [
+        "zig"
+      ],
+      "highlights": [
+        "queries/highlights.scm"
+      ],
+      "tags": [
+        "queries/tags.scm"
+      ],
+      "injection-regex": "^zig$",
+      "class-name": "TreeSitterZig"
     }
+  ],
+  "metadata": {
+    "version": "0.1.1",
+    "license": "GPL-3.0-only",
+    "description": "Zig grammar for tree-sitter",
+    "authors": [
+      {
+        "name": "Guilherme Fernandes",
+        "email": "gui.fer.sv@gmail.com",
+        "url": ""
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/guifersv/tree-sitter-zig",
+      "funding": ""
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "java": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": true
+  }
 }
